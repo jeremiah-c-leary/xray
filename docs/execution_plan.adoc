@@ -1,0 +1,15 @@
+Execution Plan
+==============
+
+* Create prototype HTML to validate:
+** What information should be displayed
+** Format the data should be displayed in
+** Investigate how methodology would work in projects with multiple designs in a single system
+
+* Document design methodology
+** When do the various pieces of information come into existence
+** How should the information be generated
+
+* Develop scripts to autogenerate as much information as possible given the design methodology
+
+
