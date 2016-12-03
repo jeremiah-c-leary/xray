@@ -1,0 +1,19 @@
+digraph g{
+  rankdir=LR;
+  splines=ortho;
+  node[shape=rectangle,style=filled,height=1,width=1]
+  A[color=lightgreen]
+  B[color=lightgreen]
+
+  Block[height=2,color=lightblue]
+  External[color=pink]
+  A -> Block [label="Interface1"];
+  External -> Block [dir=back,label="Interface2"];
+  Block -> B [ label="Interface3"];
+
+}
+
+// Paste this into the following website to get a graph:
+// http://www.webgraphviz.com/
+// Then take a snip to save the image
+
