@@ -23,19 +23,33 @@
 	  <div id="block-name">
 		<h1 class="text-primary text-center">Block C</h1>
 	  </div>
-<!-- Define the overview header -->
-          <div class="row heading-section">
-		  <a href="#block-overview" data-toggle="collapse"><h2>Overview</h2></a>
+<!-- Define the collapsing buttons -->
+          <div class="row">
+		  <div class="col-xs-2 btn">
+			  <button data-toggle="collapse" data-target="#block-overview">Overview</button>
+		  </div>
+		  <div class="col-xs-2 btn">
+			  <button data-toggle="collapse" data-target="#block-features">Features</button>
+		  </div>
+		  <div class="col-xs-2 btn">
+			  <button data-toggle="collapse" data-target="#block-interface-diagram">Block Interface Diagram</button>
+		  </div>
+		  <div class="col-xs-2 btn">
+			  <button data-toggle="collapse" data-target="#block-interfaces">Interfaces</button>
+		  </div>
+		  <div class="col-xs-2 btn">
+			  <button data-toggle="collapse" data-target="#block-interfaces">Block Diagram</button>
+		  </div>
 	  </div>
+<!-- Define the Overview section -->
           <div id="block-overview" class="collapse in">
+                  <h2 class="heading-section">Overview</h2>
 		  <p>Block C performs the heartbeat function for the system.  This watchdog function is critical to the operation of the system.  Any irregularity in the operation of Block A will be detected and the rest of the system will be notified.
 		  </p>
 	  </div>
-<!-- Define the features header -->
-          <div class="row heading-section">
-		  <a href="#block-features" data-toggle="collapse"><h2>Features</h2></a>
-	  </div>
+<!-- Define the Features section -->
 	  <div id="block-features" class="collapse">
+		  <h2 class="heading-section">Features</h2>
 		  <p> This block has the following features:</p>
 		  <ul>
 			  <li>Monitors time between Block A pulses</li>
@@ -43,23 +57,14 @@
 			  <li>Sends uptime to Block B indicating violation occured</li>
 		  </ul>
 	  </div>
-<!-- Define the Block Interface Diagram header -->
-          <div class="row heading-section">
-		  <a href="#block-interface-diagram" data-toggle="collapse"><h2>Block Interface Diagram</h2></a>
-	  </div>
+<!-- Define the Block Interface section -->
           <div id="block-interface-diagram" class="collapse">
-                  <!--
-		  <p>There would be a diagram showing what this block interfaces with.
-		  This allows the reader to put this block into context with other blocks in the design.
-		  </p>
-		  -->
+            <h2>Block Interface Diagram</h2>
 		  <img src="img/block_interface.svg" class="img-responsive">
 	  </div>
 <!-- Define the Block Interfaces header -->
-          <div class="row heading-section">
-		  <a href="#block-interfaces" data-toggle="collapse"><h2>Interfaces</h2></a>
-	  </div>
 	  <div id="block-interfaces" class="collapse">
+		  <h2 class="heading-section">Interfaces</h2>
 		  <!--<p>This would list all the interfaces the block has</p> -->
 		  <div id="interface1">
 			  <h3>Watchdog Monitor Interface</h3>
@@ -126,10 +131,8 @@
 		  </div>
 	  </div>
 <!-- Define the Block Diagram header -->
-          <div class="row heading-section">
-		  <a href="#block-diagram" data-toggle="collapse"><h2>Block Diagram</h2></a>
-	  </div>
 	  <div id="block-diagram" class="collapse">
+		  <h2 class="heading-section">Block Diagram</h2>
 		  <p>There would be some block diagram picture inserted here.</p>
 	  </div>
 	</div>
