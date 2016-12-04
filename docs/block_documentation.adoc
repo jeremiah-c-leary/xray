@@ -42,3 +42,10 @@ A top down flow of information will be created.
 Later a horizontal presentation of the information will be created.
 This all depends on how good I am at learning HTML and javascript.
 
+* Should have a <div> for each element
+** Functions
+** Overview
+** Interfaces
+
+etc...
+

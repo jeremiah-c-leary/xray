@@ -6,6 +6,7 @@ This project will provide a framework which can be applied to any HDL project.
 
 # Goal
 Document my design philosophy and create a tool to support it.
+Figure out how to navigate the information about an HDL design.
 
 # Guiding principles
 

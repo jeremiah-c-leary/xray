@@ -1,0 +1,6 @@
+
+{signal: [
+  {name: 'clk',           wave: 'p..|.........'},
+  {name: 'watchdog_trip', wave: '0..|10.......'},
+  {name: 'uptime_count',  wave: 'x..|2........', data:"2A4B"}
+]}

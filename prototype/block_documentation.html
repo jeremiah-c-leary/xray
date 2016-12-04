@@ -15,43 +15,96 @@
         <body>
         <div class="container-fluid">
 	  <div id="block-name">
-		<h1 class="text-primary text-center">Block Three</h1>
+		<h1 class="text-primary text-center">Block C</h1>
 	  </div>
 	  <div id="block-overview">
                  <h2>Overview</h2>
-		  <p>This block is really important. It exists to transfer data between sub-block A and external device B
+		  <p>Block C performs the heartbeat function for the system.  This watchdog function is critical to the operation of the system.  Any irregularity in the operation of Block A will be detected and the rest of the system will be notified.
 		  </p>
 	  </div>
 	  <div id="block-features">
 		  <h2>Features</h2>
 		  <p> This block has the following features:</p>
 		  <ul>
-			  <li>Feature 1</li>
-			  <li>Feature 2</li>
-			  <li>Feature 3</li>
+			  <li>Monitors time between Block A pulses</li>
+			  <li>Flashes LED when Block A fails to pulse at regular intervals</li>
+			  <li>Sends uptime to Block B indicating violation occured</li>
 		  </ul>
 	  </div>
           <div id="block-interface-diagram">
 		  <h2>Block Interface Diagram</h2>
+                  <!--
 		  <p>There would be a diagram showing what this block interfaces with.
 		  This allows the reader to put this block into context with other blocks in the design.
 		  </p>
+		  -->
+		  <img src="img/block_interface.svg" class="img-responsive">
 	  </div>
 	  <div id="block-interfaces">
 		  <h2>Interfaces</h2>
-		  <p>This would list all the interfaces the block has</p>
+		  <!--<p>This would list all the interfaces the block has</p> -->
 		  <div id="interface1">
-			  <h3>Interface 1</h3>
-			  <p>This is where protocols are defined for the interface.
-			  Included are waveforms and a signal list.
-			  The signal list would include bit widths and purpose of each signal
+			  <h3>Watchdog Monitor Interface</h3>
+			  <p>The Watchdog Monitor Interface is a single discrete that pulses for one clock every 1 us.
 			  </p>
+			  <table class="table table-striped table-bordered">
+				  <tr>
+				  
+					  <th>Signal</th><th>Width</th><th>Description</th>
+				  </tr>
+				  <tr>
+					  <td>clk</td><th>1</th><td>System clock</td>
+				  </tr>
+				  <tr>
+					  <td>alive</td><th>1</th><td>Indicates the source is still running.</td>
+				  </tr>
+			  </table>
+			  <h4>Watchdog Discrete Protocol</H4>
+			  <img src="img/watchdog_interface.svg" class="img-responsive">
 		  </div>
 		  <div id="interface2">
-			  <h3>Interface 2</h3>
+			  <h3>LED Interface</h3>
+			  <p>The LED Interface allows the block to use the three LEDs attached to the FPGA to indicate status to the user.</p>
+			  <table class="table table-striped table-bordered">
+				  <tr>
+				  
+					  <th>Signal</th><th>Width</th><th>Description</th>
+				  </tr>
+				  <tr>
+					  <td>clk</td><th>1</th><td>System clock</td>
+				  </tr>
+				  <tr>
+					  <td>green_led</td><th>1</th><td>Turns on green LED when asserted.</td>
+				  </tr>
+				  <tr>
+					  <td>red_led</td><th>1</th><td>Turns on red LED when asserted.</td>
+				  </tr>
+			  </table>
+			  <h4>Operation Valid Protocol</h4>
+			  <img src="img/led_interface-operation_valid_protocol.svg" class="img-responsive">
+			  <h4>Watchdog Error Protocol</h4>
+			  <img src="img/led_interface-watchdog_error_protocol.svg" class="img-responsive">
 		  </div>
 		  <div id="interface3">
-			  <h3>Interface 3</h3>
+			  <h3>Watchdog Uptime Interface</h3>
+			  <p>The Watchdog Invalid Time Interface reports the number of 1 us counts when the watchdog timer tripped.  This lets the system report uptime statistics</p>
+			  <table class="table table-striped table-bordered">
+				  <tr>
+				  
+					  <th>Signal</th><th>Width</th><th>Description</th>
+				  </tr>
+				  <tr>
+					  <td>clk</td><th>1</th><td>System clock</td>
+				  </tr>
+				  <tr>
+					  <td>watchdog_trip</td><th>1</th><td>Pulse indicating the watchdog has tripped.</td>
+				  </tr>
+				  <tr>
+					  <td>uptime_count</td><th>16</th><td>Reports the uptime from system startup when the watchdog tripped.</td>
+				  </tr>
+			  </table>
+			  <h4>Uptime Valid Protocol</h4>
+			  <img src="img/watchdog_uptime_interface-uptime_valid.svg" class="img-responsive">
 		  </div>
 	  </div>
 	  <div id="block-diagram">
