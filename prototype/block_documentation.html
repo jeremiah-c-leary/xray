@@ -1,4 +1,9 @@
-
+<style>
+  .heading-section{
+	  background-color:white;
+	  color:black;
+  }
+</style>
 <html>
 	<head>
 		<!-- Latest compiled and minified CSS -->
@@ -9,21 +14,28 @@
                 
                 <!-- Latest compiled JavaScript -->
                 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-                <!-- This is temporary so I do not have to refresh the browser myself-->
+                <!-- This is temporary so I do not have to refresh the browser myself
 		<meta http-equiv="refresh" content="10">
+		-->
 	</head>
         <body>
         <div class="container-fluid">
 	  <div id="block-name">
 		<h1 class="text-primary text-center">Block C</h1>
 	  </div>
-	  <div id="block-overview">
-                 <h2>Overview</h2>
+<!-- Define the overview header -->
+          <div class="row heading-section">
+		  <a href="#block-overview" data-toggle="collapse"><h2>Overview</h2></a>
+	  </div>
+          <div id="block-overview" class="collapse in">
 		  <p>Block C performs the heartbeat function for the system.  This watchdog function is critical to the operation of the system.  Any irregularity in the operation of Block A will be detected and the rest of the system will be notified.
 		  </p>
 	  </div>
-	  <div id="block-features">
-		  <h2>Features</h2>
+<!-- Define the features header -->
+          <div class="row heading-section">
+		  <a href="#block-features" data-toggle="collapse"><h2>Features</h2></a>
+	  </div>
+	  <div id="block-features" class="collapse">
 		  <p> This block has the following features:</p>
 		  <ul>
 			  <li>Monitors time between Block A pulses</li>
@@ -31,8 +43,11 @@
 			  <li>Sends uptime to Block B indicating violation occured</li>
 		  </ul>
 	  </div>
-          <div id="block-interface-diagram">
-		  <h2>Block Interface Diagram</h2>
+<!-- Define the Block Interface Diagram header -->
+          <div class="row heading-section">
+		  <a href="#block-interface-diagram" data-toggle="collapse"><h2>Block Interface Diagram</h2></a>
+	  </div>
+          <div id="block-interface-diagram" class="collapse">
                   <!--
 		  <p>There would be a diagram showing what this block interfaces with.
 		  This allows the reader to put this block into context with other blocks in the design.
@@ -40,8 +55,11 @@
 		  -->
 		  <img src="img/block_interface.svg" class="img-responsive">
 	  </div>
-	  <div id="block-interfaces">
-		  <h2>Interfaces</h2>
+<!-- Define the Block Interfaces header -->
+          <div class="row heading-section">
+		  <a href="#block-interfaces" data-toggle="collapse"><h2>Interfaces</h2></a>
+	  </div>
+	  <div id="block-interfaces" class="collapse">
 		  <!--<p>This would list all the interfaces the block has</p> -->
 		  <div id="interface1">
 			  <h3>Watchdog Monitor Interface</h3>
@@ -107,8 +125,11 @@
 			  <img src="img/watchdog_uptime_interface-uptime_valid.svg" class="img-responsive">
 		  </div>
 	  </div>
-	  <div id="block-diagram">
-		  <h2>Block Diagram</h2>
+<!-- Define the Block Diagram header -->
+          <div class="row heading-section">
+		  <a href="#block-diagram" data-toggle="collapse"><h2>Block Diagram</h2></a>
+	  </div>
+	  <div id="block-diagram" class="collapse">
 		  <p>There would be some block diagram picture inserted here.</p>
 	  </div>
 	</div>
