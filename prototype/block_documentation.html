@@ -1,11 +1,14 @@
+<!DOCTYPE html>
 <style>
   .heading-section{
-	  background-color:white;
+	  background-color:lightgrey;
 	  color:black;
   }
 </style>
-<html>
+<html lang="en">
 	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<!-- Latest compiled and minified CSS -->
                 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
                 
@@ -19,12 +22,31 @@
 		-->
 	</head>
         <body>
-        <div class="container-fluid">
+<!-- Add Navigation Bar -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Block C</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="#block-overview" data-toggle="collapse">Overview</a></li>
+      <li><a href="#block-features" data-toggle="collapse">Features</a></li>
+      <li><a href="#block-interface-diagram" data-toggle="collapse">Interface Diagram</a></li>
+      <li><a href="#block-interfaces" data-toggle="collapse">Interfaces</a></li>
+      <li><a href="#block-block-diagram" data-toggle="collapse">Block Diagram</a></li>
+    </ul>
+  </div>
+</nav>
+<div><p>This is to push the overview down.</p>
+	<p>Just a little more</p></div>
+<!--
+	<div class="container-fluid">
 	  <div id="block-name">
 		<h1 class="text-primary text-center">Block C</h1>
 	  </div>
+-->
 <!-- Define the collapsing buttons -->
-          <div class="row">
+<!--          <div class="row">
 		  <div class="col-xs-2 btn">
 			  <button data-toggle="collapse" data-target="#block-overview">Overview</button>
 		  </div>
@@ -41,6 +63,7 @@
 			  <button data-toggle="collapse" data-target="#block-interfaces">Block Diagram</button>
 		  </div>
 	  </div>
+-->
 <!-- Define the Overview section -->
           <div id="block-overview" class="collapse in">
                   <h2 class="heading-section">Overview</h2>
@@ -59,7 +82,7 @@
 	  </div>
 <!-- Define the Block Interface section -->
           <div id="block-interface-diagram" class="collapse">
-            <h2>Block Interface Diagram</h2>
+            <h2 class="heading-section">Interface Diagram</h2>
 		  <img src="img/block_interface.svg" class="img-responsive">
 	  </div>
 <!-- Define the Block Interfaces header -->
@@ -131,7 +154,7 @@
 		  </div>
 	  </div>
 <!-- Define the Block Diagram header -->
-	  <div id="block-diagram" class="collapse">
+	  <div id="block-block-diagram" class="collapse">
 		  <h2 class="heading-section">Block Diagram</h2>
 		  <p>There would be some block diagram picture inserted here.</p>
 	  </div>
