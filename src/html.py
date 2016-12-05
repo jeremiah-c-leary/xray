@@ -72,7 +72,7 @@ class header():
     self.header = []
     self.header.append(' '*indent + '<head>')
     for oItem in self.items:
-      self.header.append('  ' + oItem.create(indent))
+      self.header.append(' '*indent + oItem.create(indent))
     self.header.append(' '*indent + '</head>')
     return self.header
 
