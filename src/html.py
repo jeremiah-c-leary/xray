@@ -7,11 +7,11 @@ class htmlFile():
   def add_item(self,item):
     self.items.append(item)
 
-  def create(self):
+  def create(self,indent=2):
     self.html = []
     self.html.append('<html lang="en">')
     for oItem in self.items:
-      self.html.extend(oItem.create(indent=2))
+      self.html.extend(oItem.create(indent))
     self.html.append('</html>')
     return self.html
 
