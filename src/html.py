@@ -4,6 +4,9 @@ class tag():
     self.name = name
     self.items = None
     self.source = None
+    self.closeTag = True
+    self.rel = None
+    self.href = None
 
   def add_item(self,item):
     if not self.items:
@@ -13,15 +16,20 @@ class tag():
   def create(self,indent=0,level=0):
     self.tag = []
     self.indent = ' '*indent*level
-    self.firstTag = self.indent + '<' + self.name
+    self.openTag = self.indent + '<' + self.name
     if self.source:
-      self.firstTag = self.firstTag + ' src="' + self.source + '"'
-    self.firstTag = self.firstTag + '>'
-    self.tag.append(self.firstTag)
+      self.openTag = self.openTag + ' src="' + self.source + '"'
+    if self.rel:
+      self.openTag = self.openTag + ' rel="' + self.rel + '"'
+    if self.href:
+      self.openTag = self.openTag + ' href="' + self.href + '"'
+    self.openTag = self.openTag + '>'
+    self.tag.append(self.openTag)
     if self.items:
       for oItem in self.items:
         self.tag.extend(oItem.create(indent=indent, level=level + 1))
-    self.tag.append(self.indent + '</' + self.name + '>')
+    if self.closeTag:
+      self.tag.append(self.indent + '</' + self.name + '>')
     return self.tag
 
 class htmlFile():
@@ -46,14 +54,11 @@ class body():
   def __init__(self):
     self.items=[]
 
-class link():
+class link(tag):
 
   def __init__(self):
-    self.rel = None
-    self.href = None
-
-  def create(self,indent=0):
-    return ' '*indent + '<link rel="' + self.rel + '" href="' + self.href + '">'
+    tag.__init__(self,'link')
+    self.closeTag = False
 
 class meta():
 

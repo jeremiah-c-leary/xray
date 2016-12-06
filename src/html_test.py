@@ -76,7 +76,7 @@ class testHtmlMethods(unittest.TestCase):
         oLink = html.link()
         oLink.rel = 'Hello'
         oLink.href = 'Goodbye'
-        self.assertEqual(oLink.create(),'<link rel="Hello" href="Goodbye">')
+        self.assertEqual(oLink.create(),['<link rel="Hello" href="Goodbye">'])
 
     def test_meta_create(self):
         oMeta = html.meta()
