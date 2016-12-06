@@ -7,6 +7,8 @@ class tag():
     self.closeTag = True
     self.rel = None
     self.href = None
+    self.meta_items = None
+    self.language = None
 
   def add_item(self,item):
     if not self.items:
@@ -23,6 +25,11 @@ class tag():
       self.openTag = self.openTag + ' rel="' + self.rel + '"'
     if self.href:
       self.openTag = self.openTag + ' href="' + self.href + '"'
+    if self.meta_items:
+      for metaItem in self.meta_items:
+        self.openTag = self.openTag + ' ' + metaItem
+    if self.language:
+      self.openTag = self.openTag + ' lang="' + self.language + '"'
     self.openTag = self.openTag + '>'
     self.tag.append(self.openTag)
     if self.items:
@@ -32,27 +39,16 @@ class tag():
       self.tag.append(self.indent + '</' + self.name + '>')
     return self.tag
 
-class htmlFile():
+class htmlFile(tag):
 
   def __init__(self):
-    self.items=[]
+    tag.__init__(self,'html')
+    self.language = 'en' 
 
-  def add_item(self,item):
-    self.items.append(item)
-
-  def create(self,indent=2):
-    self.html = []
-    self.html.append('<html lang="en">')
-    for oItem in self.items:
-      self.html.extend(oItem.create(indent))
-    self.html.append('</html>')
-    return self.html
-
-
-class body():
+class body(tag):
 
   def __init__(self):
-    self.items=[]
+    tag.__init__(self,'body')
 
 class link(tag):
 
@@ -60,36 +56,29 @@ class link(tag):
     tag.__init__(self,'link')
     self.closeTag = False
 
-class meta():
+class meta(tag):
 
   def __init__(self):
-    self.items=[]
+    tag.__init__(self,'meta')
+    self.closeTag = False
+    self.meta_items = []
 
-  def add_item(self,item):
-    self.items.append(item)
+  def add_meta_item(self,meta):
+    self.meta_items.append(meta)
 
-  def create(self,indent=0):
-    self.meta = ' '*indent + '<meta'
-    for item in self.items:
-      self.meta = self.meta + ' ' + item
-    self.meta = self.meta + '>'
-    return self.meta
-
-class header():
+class header(tag):
 
   def __init__(self):
-    self.items=[]
-
-  def add_item(self,item):
-    self.items.append(item)
+    tag.__init__(self,'head')
 
   def add_bootstrap(self):
+    self.items = []
     oMeta = meta()
-    oMeta.add_item('charset="utf-8"')
+    oMeta.add_meta_item('charset="utf-8"')
     self.items.append(oMeta)
     oMeta = meta()
-    oMeta.add_item('name="viewport"')
-    oMeta.add_item('content="width=device-width, initial-scale=1"')
+    oMeta.add_meta_item('name="viewport"')
+    oMeta.add_meta_item('content="width=device-width, initial-scale=1"')
     self.items.append(oMeta)
     oLink = link()
     oLink.rel = 'stylesheet'
@@ -98,19 +87,10 @@ class header():
     self.items.append(script('https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'))
     self.items.append(script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'))
 
-  def create(self,indent=0):
-    self.header = []
-    self.header.append(' '*indent + '<head>')
-    for oItem in self.items:
-      self.header.append(' '*indent + oItem.create(indent))
-    self.header.append(' '*indent + '</head>')
-    return self.header
-
-class script():
+class script(tag):
 
   def __init__(self,source):
+    tag.__init__(self,'script')
     self.source=source
 
-  def create(self,indent=0):
-    return ' '*indent + '<script src="' + self.source + '"></script>'
 
