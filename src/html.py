@@ -1,4 +1,29 @@
 
+class tag():
+  def __init__(self,name):
+    self.name = name
+    self.items = None
+    self.source = None
+
+  def add_item(self,item):
+    if not self.items:
+      self.items = []
+    self.items.append(item)
+
+  def create(self,indent=0,level=0):
+    self.tag = []
+    self.indent = ' '*indent*level
+    self.firstTag = self.indent + '<' + self.name
+    if self.source:
+      self.firstTag = self.firstTag + ' src="' + self.source + '"'
+    self.firstTag = self.firstTag + '>'
+    self.tag.append(self.firstTag)
+    if self.items:
+      for oItem in self.items:
+        self.tag.extend(oItem.create(indent=indent, level=level + 1))
+    self.tag.append(self.indent + '</' + self.name + '>')
+    return self.tag
+
 class htmlFile():
 
   def __init__(self):

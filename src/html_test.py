@@ -117,6 +117,49 @@ class testHtmlMethods(unittest.TestCase):
         oHtml.add_item(oHeader)
         self.assertEqual(oHtml.create(),lResult)
 
+    def test_tag_name(self):
+       oTag = html.tag('tag_name')
+       self.assertEqual(oTag.name,'tag_name')
+
+    def test_tag_items(self):
+       oTag = html.tag('tag_name')
+       self.assertEqual(oTag.items,None)
+       oTag.add_item('Item One')
+       self.assertEqual(oTag.items[0],'Item One')
+       oTag.add_item('Item Two')
+       self.assertEqual(oTag.items[0],'Item One')
+       self.assertEqual(oTag.items[1],'Item Two')
+
+    def test_tag_create_empty_items(self):
+       oTag = html.tag('tag')
+       self.assertEqual(oTag.create(),['<tag>','</tag>'])
+
+    def test_tag_create_empty_items_indent(self):
+       oTag = html.tag('tag')
+       self.assertEqual(oTag.create(indent=2,level=1),['  <tag>','  </tag>'])
+
+    def test_tag_create_with_items_indent(self):
+       lResult = []
+       lResult.append('  <tag1>')
+       lResult.append('    <tag2>')
+       lResult.append('      <tag3>')
+       lResult.append('      </tag3>')
+       lResult.append('    </tag2>')
+       lResult.append('  </tag1>')
+       oTag3 = html.tag('tag3')
+       oTag2 = html.tag('tag2')
+       oTag1 = html.tag('tag1')
+       oTag2.add_item(oTag3)
+       oTag1.add_item(oTag2)
+       self.assertEqual(oTag1.create(indent=2,level=1),lResult)
+
+    def test_tag_create_with_source(self):
+       lResult = []
+       lResult.append('<tag src="source">')
+       lResult.append('</tag>')
+       oTag = html.tag('tag')
+       oTag.source = 'source'
+       self.assertEqual(oTag.create(),lResult)
 
 if __name__ == '__main__':
     unittest.main()
