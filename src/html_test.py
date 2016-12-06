@@ -156,6 +156,15 @@ class testHtmlMethods(unittest.TestCase):
        oTag1.add_tag(oTag2)
        self.assertEqual(oTag1.create(indent=2,level=1),lResult)
 
+    def test_tag_class(self):
+       oTag = html.tag('tag')
+       oTag.add_class('class1')
+       self.assertEqual(oTag.create(),['<tag class="class1">','</tag>'])
+       oTag.add_class('class2')
+       self.assertEqual(oTag.create(),['<tag class="class1 class2">','</tag>'])
+       oTag.add_class('class3')
+       self.assertEqual(oTag.create(),['<tag class="class1 class2 class3">','</tag>'])
+
     def test_tag_create_with_source(self):
        lResult = []
        lResult.append('<tag src="source">')
@@ -165,15 +174,45 @@ class testHtmlMethods(unittest.TestCase):
        self.assertEqual(oTag.create(),lResult)
 
 
-#    def test_basic_html_structure(self):
-#       lResult = []
-#       lResult.append('<html lang="en">')
-#       lResult.append('  <head>')
-#       lResult.append('  </head>')
-#       lResult.append('  <body>')
-#       lResult.append('  </body>')
-#       oHtml = html.html()
-#       oHtml.add_tag(
+    def test_basic_html_structure(self):
+       lResult = []
+       lResult.append('<html lang="en">')
+       lResult.append('  <head>')
+       lResult.append('  </head>')
+       lResult.append('  <body>')
+       lResult.append('  </body>')
+       lResult.append('</html>')
+       oHtml = html.html()
+       oHtml.add_tag(html.header())
+       oHtml.add_tag(html.body())
+       self.assertEqual(oHtml.create(indent=2),lResult)
+
+    def test_nav_bar_creation(self):
+       lResult = []
+       lResult.append('<nav class="navbar navbar-inverse navbar-fixed-top">')
+       lResult.append('  <div class="container-fluid">')
+       lResult.append('    <div class="navbar-header">')
+       lResult.append('    </div>')
+       lResult.append('    <ul class="nav navbar-nav">')
+       lResult.append('    </ul>')
+       lResult.append('  </div>')
+       lResult.append('</nav>')
+       oNav = html.tag('nav')
+       oNav.add_class('navbar')
+       oNav.add_class('navbar-inverse')
+       oNav.add_class('navbar-fixed-top')
+       oDiv = html.tag('div')
+       oDiv.add_class('container-fluid')
+       oNav.add_tag(oDiv)
+       oDiv = html.tag('div')
+       oDiv.add_class('navbar-header')
+       oNav.tags[0].add_tag(oDiv)
+       oUl = html.tag('ul')
+       oUl.add_class('nav')
+       oUl.add_class('navbar-nav')
+       oNav.tags[0].add_tag(oUl)
+       self.assertEqual(oNav.create(indent=2),lResult)
+
 
 if __name__ == '__main__':
     unittest.main()

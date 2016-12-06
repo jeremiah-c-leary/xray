@@ -9,11 +9,17 @@ class tag():
     self.href = None
     self.meta_items = None
     self.language = None
+    self.classes = None
 
   def add_tag(self,item):
     if not self.tags:
       self.tags= []
     self.tags.append(item)
+
+  def add_class(self,item):
+    if not self.classes:
+      self.classes= []
+    self.classes.append(item)
 
   def create(self,indent=0,level=0):
     self.tag = []
@@ -30,6 +36,12 @@ class tag():
         self.openTag = self.openTag + ' ' + metaItem
     if self.language:
       self.openTag = self.openTag + ' lang="' + self.language + '"'
+    if self.classes:
+      self.openTag = self.openTag + ' class="'
+      for sClass in self.classes:
+        self.openTag = self.openTag + sClass + ' '
+      self.openTag = self.openTag[:-1] + '"'
+
     self.openTag = self.openTag + '>'
     self.tag.append(self.openTag)
     if self.tags:
