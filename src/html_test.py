@@ -5,16 +5,16 @@ import unittest
 class testHtmlMethods(unittest.TestCase):
 
     def test_html_object_exists(self):
-        self.assertTrue(html.htmlFile())
+        self.assertTrue(html.html())
 
     def test_empty_body_on_html_create(self):
-        oHtml = html.htmlFile()
-        self.assertFalse(oHtml.items)
+        oHtml = html.html()
+        self.assertFalse(oHtml.tags)
 
     def test_add_to_html(self):
-        oHtml = html.htmlFile()
-        oHtml.add_item('This is body text')
-        self.assertEqual(oHtml.items, ['This is body text'])
+        oHtml = html.html()
+        oHtml.add_tag('This is body text')
+        self.assertEqual(oHtml.tags, ['This is body text'])
 
     def test_body_object_exists(self):
         self.assertTrue(html.body())
@@ -32,8 +32,8 @@ class testHtmlMethods(unittest.TestCase):
     def test_add_script_to_header(self):
 	oScript = html.script('Hello')
 	oHeader = html.header()
-	oHeader.add_item(oScript)
-	self.assertEqual(oHeader.items[0].source,'Hello')
+	oHeader.add_tag(oScript)
+	self.assertEqual(oHeader.tags[0].source,'Hello')
 
     def test_script_create(self):
         oScript = html.script('Hello')
@@ -42,13 +42,13 @@ class testHtmlMethods(unittest.TestCase):
     def test_add_bootstrap_to_header(self):
 	oHeader = html.header()
 	oHeader.add_bootstrap()
-	self.assertEqual(oHeader.items[0].meta_items[0],'charset="utf-8"')
-	self.assertEqual(oHeader.items[1].meta_items[0],'name="viewport"')
-	self.assertEqual(oHeader.items[1].meta_items[1],'content="width=device-width, initial-scale=1"')
-	self.assertEqual(oHeader.items[2].rel,'stylesheet')
-        self.assertEqual(oHeader.items[2].href,'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
-	self.assertEqual(oHeader.items[3].source,'https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
-	self.assertEqual(oHeader.items[4].source,'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+	self.assertEqual(oHeader.tags[0].meta_items[0],'charset="utf-8"')
+	self.assertEqual(oHeader.tags[1].meta_items[0],'name="viewport"')
+	self.assertEqual(oHeader.tags[1].meta_items[1],'content="width=device-width, initial-scale=1"')
+	self.assertEqual(oHeader.tags[2].rel,'stylesheet')
+        self.assertEqual(oHeader.tags[2].href,'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+	self.assertEqual(oHeader.tags[3].source,'https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
+	self.assertEqual(oHeader.tags[4].source,'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
 
     def test_header_create_with_empty_item_list(self):
         oHeader = html.header()
@@ -56,13 +56,13 @@ class testHtmlMethods(unittest.TestCase):
 
     def test_header_create_with_script(self):
         oHeader = html.header()
-        oHeader.add_item(html.script('Hello'))
+        oHeader.add_tag(html.script('Hello'))
         self.assertEqual(oHeader.create(),['<head>','<script src="Hello">','</script>','</head>'])
 
     def test_meta(self):
         oMeta = html.meta()
-        oMeta.add_item('name="viewport"')
-        self.assertEqual(oMeta.items[0],'name="viewport"')
+        oMeta.add_tag('name="viewport"')
+        self.assertEqual(oMeta.tags[0],'name="viewport"')
 
     def test_link_definition(self):
         oLink = html.link()
@@ -116,8 +116,8 @@ class testHtmlMethods(unittest.TestCase):
         lResult.append('</html>')
         oHeader = html.header()
         oHeader.add_bootstrap()
-        oHtml = html.htmlFile()
-        oHtml.add_item(oHeader)
+        oHtml = html.html()
+        oHtml.add_tag(oHeader)
         self.assertEqual(oHtml.create(indent=2),lResult)
 
     def test_tag_name(self):
@@ -126,12 +126,12 @@ class testHtmlMethods(unittest.TestCase):
 
     def test_tag_items(self):
        oTag = html.tag('tag_name')
-       self.assertEqual(oTag.items,None)
-       oTag.add_item('Item One')
-       self.assertEqual(oTag.items[0],'Item One')
-       oTag.add_item('Item Two')
-       self.assertEqual(oTag.items[0],'Item One')
-       self.assertEqual(oTag.items[1],'Item Two')
+       self.assertEqual(oTag.tags,None)
+       oTag.add_tag('Item One')
+       self.assertEqual(oTag.tags[0],'Item One')
+       oTag.add_tag('Item Two')
+       self.assertEqual(oTag.tags[0],'Item One')
+       self.assertEqual(oTag.tags[1],'Item Two')
 
     def test_tag_create_empty_items(self):
        oTag = html.tag('tag')
@@ -152,8 +152,8 @@ class testHtmlMethods(unittest.TestCase):
        oTag3 = html.tag('tag3')
        oTag2 = html.tag('tag2')
        oTag1 = html.tag('tag1')
-       oTag2.add_item(oTag3)
-       oTag1.add_item(oTag2)
+       oTag2.add_tag(oTag3)
+       oTag1.add_tag(oTag2)
        self.assertEqual(oTag1.create(indent=2,level=1),lResult)
 
     def test_tag_create_with_source(self):
@@ -163,6 +163,17 @@ class testHtmlMethods(unittest.TestCase):
        oTag = html.tag('tag')
        oTag.source = 'source'
        self.assertEqual(oTag.create(),lResult)
+
+
+#    def test_basic_html_structure(self):
+#       lResult = []
+#       lResult.append('<html lang="en">')
+#       lResult.append('  <head>')
+#       lResult.append('  </head>')
+#       lResult.append('  <body>')
+#       lResult.append('  </body>')
+#       oHtml = html.html()
+#       oHtml.add_tag(
 
 if __name__ == '__main__':
     unittest.main()

@@ -2,7 +2,7 @@
 class tag():
   def __init__(self,name):
     self.name = name
-    self.items = None
+    self.tags = None
     self.source = None
     self.closeTag = True
     self.rel = None
@@ -10,10 +10,10 @@ class tag():
     self.meta_items = None
     self.language = None
 
-  def add_item(self,item):
-    if not self.items:
-      self.items = []
-    self.items.append(item)
+  def add_tag(self,item):
+    if not self.tags:
+      self.tags= []
+    self.tags.append(item)
 
   def create(self,indent=0,level=0):
     self.tag = []
@@ -32,14 +32,14 @@ class tag():
       self.openTag = self.openTag + ' lang="' + self.language + '"'
     self.openTag = self.openTag + '>'
     self.tag.append(self.openTag)
-    if self.items:
-      for oItem in self.items:
+    if self.tags:
+      for oItem in self.tags:
         self.tag.extend(oItem.create(indent=indent, level=level + 1))
     if self.closeTag:
       self.tag.append(self.indent + '</' + self.name + '>')
     return self.tag
 
-class htmlFile(tag):
+class html(tag):
 
   def __init__(self):
     tag.__init__(self,'html')
@@ -72,20 +72,20 @@ class header(tag):
     tag.__init__(self,'head')
 
   def add_bootstrap(self):
-    self.items = []
+    self.tags = []
     oMeta = meta()
     oMeta.add_meta_item('charset="utf-8"')
-    self.items.append(oMeta)
+    self.tags.append(oMeta)
     oMeta = meta()
     oMeta.add_meta_item('name="viewport"')
     oMeta.add_meta_item('content="width=device-width, initial-scale=1"')
-    self.items.append(oMeta)
+    self.tags.append(oMeta)
     oLink = link()
     oLink.rel = 'stylesheet'
     oLink.href = 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'
-    self.items.append(oLink)
-    self.items.append(script('https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'))
-    self.items.append(script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'))
+    self.tags.append(oLink)
+    self.tags.append(script('https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'))
+    self.tags.append(script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'))
 
 class script(tag):
 
