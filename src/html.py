@@ -10,6 +10,7 @@ class tag():
     self.meta_items = None
     self.language = None
     self.classes = None
+    self.linkText = None
 
   def add_tag(self,item):
     if not self.tags:
@@ -47,6 +48,8 @@ class tag():
     if self.tags:
       for oItem in self.tags:
         self.tag.extend(oItem.create(indent=indent, level=level + 1))
+    if self.linkText:
+      self.tag.append(self.indent + ' '*indent + self.linkText)
     if self.closeTag:
       self.tag.append(self.indent + '</' + self.name + '>')
     return self.tag
@@ -104,5 +107,36 @@ class script(tag):
   def __init__(self,source):
     tag.__init__(self,'script')
     self.source=source
+
+class nav(tag):
+
+  def __init__(self):
+    tag.__init__(self,'nav')
+
+class div(tag):
+
+  def __init__(self):
+    tag.__init__(self,'div')
+
+class ul(tag):
+
+  def __init__(self):
+    tag.__init__(self,'ul')
+
+class li(tag):
+
+  def __init__(self):
+    tag.__init__(self,'li')
+
+class p(tag):
+
+  def __init__(self):
+    tag.__init__(self,'p')
+
+class a(tag):
+
+  def __init__(self,linkText):
+    tag.__init__(self,'a')
+    self.linkText = linkText
 
 
