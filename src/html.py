@@ -11,6 +11,7 @@ class tag():
     self.language = None
     self.classes = None
     self.linkText = None
+    self.dataToggle = None
 
   def add_tag(self,item):
     if not self.tags:
@@ -26,22 +27,31 @@ class tag():
     self.tag = []
     self.indent = ' '*indent*level
     self.openTag = self.indent + '<' + self.name
+
     if self.source:
       self.openTag = self.openTag + ' src="' + self.source + '"'
+
     if self.rel:
       self.openTag = self.openTag + ' rel="' + self.rel + '"'
+
     if self.href:
       self.openTag = self.openTag + ' href="' + self.href + '"'
+
     if self.meta_items:
       for metaItem in self.meta_items:
         self.openTag = self.openTag + ' ' + metaItem
+
     if self.language:
       self.openTag = self.openTag + ' lang="' + self.language + '"'
+
     if self.classes:
       self.openTag = self.openTag + ' class="'
       for sClass in self.classes:
         self.openTag = self.openTag + sClass + ' '
       self.openTag = self.openTag[:-1] + '"'
+
+    if self.dataToggle:
+      self.openTag = self.openTag + ' data-toggle="' + self.dataToggle + '"'
 
     self.openTag = self.openTag + '>'
     self.tag.append(self.openTag)
@@ -81,7 +91,7 @@ class meta(tag):
   def add_meta_item(self,meta):
     self.meta_items.append(meta)
 
-class header(tag):
+class head(tag):
 
   def __init__(self):
     tag.__init__(self,'head')
@@ -130,8 +140,9 @@ class li(tag):
 
 class p(tag):
 
-  def __init__(self):
+  def __init__(self,text):
     tag.__init__(self,'p')
+    self.linkText = text
 
 class a(tag):
 

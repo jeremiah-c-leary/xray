@@ -20,7 +20,7 @@ class testHtmlMethods(unittest.TestCase):
         self.assertTrue(html.body())
 
     def test_header_object_exists(self):
-        self.assertTrue(html.header())
+        self.assertTrue(html.head())
 
     def test_script_object_exists(self):
         self.assertTrue(html.script('Hello'))
@@ -31,7 +31,7 @@ class testHtmlMethods(unittest.TestCase):
 
     def test_add_script_to_header(self):
 	oScript = html.script('Hello')
-	oHeader = html.header()
+	oHeader = html.head()
 	oHeader.add_tag(oScript)
 	self.assertEqual(oHeader.tags[0].source,'Hello')
 
@@ -40,7 +40,7 @@ class testHtmlMethods(unittest.TestCase):
         self.assertEqual(oScript.create(),['<script src="Hello">','</script>'])
 
     def test_add_bootstrap_to_header(self):
-	oHeader = html.header()
+	oHeader = html.head()
 	oHeader.add_bootstrap()
 	self.assertEqual(oHeader.tags[0].meta_items[0],'charset="utf-8"')
 	self.assertEqual(oHeader.tags[1].meta_items[0],'name="viewport"')
@@ -51,11 +51,11 @@ class testHtmlMethods(unittest.TestCase):
 	self.assertEqual(oHeader.tags[4].source,'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
 
     def test_header_create_with_empty_item_list(self):
-        oHeader = html.header()
+        oHeader = html.head()
         self.assertEqual(oHeader.create(),['<head>','</head>'])
 
     def test_header_create_with_script(self):
-        oHeader = html.header()
+        oHeader = html.head()
         oHeader.add_tag(html.script('Hello'))
         self.assertEqual(oHeader.create(),['<head>','<script src="Hello">','</script>','</head>'])
 
@@ -97,7 +97,7 @@ class testHtmlMethods(unittest.TestCase):
         lResult.append('    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">')
         lResult.append('    </script>')
         lResult.append('  </head>')
-        oHeader = html.header()
+        oHeader = html.head()
         oHeader.add_bootstrap()
         self.assertEqual(oHeader.create(indent=2,level=1),lResult)
 
@@ -114,7 +114,7 @@ class testHtmlMethods(unittest.TestCase):
         lResult.append('    </script>')
         lResult.append('  </head>')
         lResult.append('</html>')
-        oHeader = html.header()
+        oHeader = html.head()
         oHeader.add_bootstrap()
         oHtml = html.html()
         oHtml.add_tag(oHeader)
@@ -183,7 +183,7 @@ class testHtmlMethods(unittest.TestCase):
        lResult.append('  </body>')
        lResult.append('</html>')
        oHtml = html.html()
-       oHtml.add_tag(html.header())
+       oHtml.add_tag(html.head())
        oHtml.add_tag(html.body())
        self.assertEqual(oHtml.create(indent=2),lResult)
 
