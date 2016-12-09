@@ -12,6 +12,7 @@ class tag():
         self.classes = None
         self.linkText = None
         self.dataToggle = None
+        self.id = None
 
     def add_tag(self, item):
         if not self.tags:
@@ -27,6 +28,9 @@ class tag():
         self.tag = []
         self.indent = ' ' * indent * level
         self.openTag = self.indent + '<' + self.name
+
+        if self.id:
+            self.openTag = self.openTag + ' id="' + self.id + '"'
 
         if self.source:
             self.openTag = self.openTag + ' src="' + self.source + '"'
@@ -145,9 +149,9 @@ class ul(tag):
 
 class li(tag):
 
-    def __init__(self):
+    def __init__(self,linkText=None):
         tag.__init__(self, 'li')
-
+        self.linkText = linkText
 
 class p(tag):
 
@@ -160,4 +164,18 @@ class a(tag):
 
     def __init__(self, linkText):
         tag.__init__(self, 'a')
+        self.linkText = linkText
+
+
+class h1(tag):
+    
+    def __init__(self, linkText):
+        tag.__init__(self, 'h1')
+        self.linkText = linkText
+
+
+class h2(tag):
+    
+    def __init__(self, linkText):
+        tag.__init__(self, 'h2')
         self.linkText = linkText
