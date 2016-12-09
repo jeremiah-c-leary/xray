@@ -102,7 +102,8 @@ def main():
   oFPGA_two = menu_item('fpga_two.html','Two')
   oFPGA_three = menu_item('fpga_three.html','Three')
   oFPGAMenu = build_drop_menu('FPGA',[oFPGA_one,oFPGA_two,oFPGA_three])
-  oBlockMenu = menu_item('#blocks','Block')
+  oBlockCMenu = menu_item('block_c.html','Block C')
+  oBlockMenu = build_drop_menu('Block',[oBlockCMenu])
   oInterface_external = menu_item('#interfaces-external','External')
   oInterface_internal = menu_item('#interfaces-internal','Internal')
   oInterfaceMenu = build_drop_menu('Interfaces',[oInterface_external,oInterface_internal])
@@ -120,6 +121,8 @@ def main():
   oBody.add_tag(oParagraph)
 
   oHtmlTag.add_tag(oBody)
+
+  # Create Interface
 
   # Write System level HTML to file
   fHtml = open ('system.html','w')
@@ -177,6 +180,35 @@ def main():
 
   # Write System level HTML to file
   fHtml = open ('fpga_three.html','w')
+  fHtml.writelines(oHtmlTag.create())
+  fHtml.close()
+
+
+  # Create Block C page
+  # Generate html
+  oHtmlTag = html.html()
+  # Generate head
+  oHeadTag = build_head()
+  oHtmlTag.add_tag(oHeadTag)
+  oBody = html.body()
+  oBody.add_tag(oNavBar)
+  oBody.add_tag(html.h2('Overview'))
+  oBody.add_tag(html.p('Block C performs the heartbeat function for the system.  This watchdog function is critical to the operation of the system.  Any irregularity in the operation of Block A will be detected and the rest of the system will be notified.'))
+  oBody.add_tag(html.h2('Features'))
+  oBody.add_tag(html.p('This block has the following features:'))
+  oUl = html.ul()
+  oUl.add_tag(html.li('Monitors time between Block A pulses'))
+  oUl.add_tag(html.li('Flashes LED when Block A fails to pulse at regular intervals'))
+  oUl.add_tag(html.li('Sends uptime to Block B indicated violation occured'))
+  
+  oBody.add_tag(oUl)
+
+
+
+  oHtmlTag.add_tag(oBody)
+
+  # Write System level HTML to file
+  fHtml = open ('block_c.html','w')
   fHtml.writelines(oHtmlTag.create())
   fHtml.close()
 
