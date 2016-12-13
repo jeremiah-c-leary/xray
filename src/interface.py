@@ -8,12 +8,25 @@ class signal():
         self.width = iWidth
         self.description = sDescription
 
+    def build_html(self):
+        oTr = html.tag('tr')
+
+        oTd = html.tag('td')
+        oTd.linkText = self.name
+        oTr.add_tag(oTd)
+
+        oTd = html.tag('td')
+        oTd.linkText = str(self.width)
+        oTr.add_tag(oTd)
+
+        oTd = html.tag('td')
+        oTd.linkText = self.description
+        oTr.add_tag(oTd)
+
+        return oTr
+
     def create(self):
-        lHtml = []
-        lHtml.append('<tr>')
-        lHtml.append('<td>' + self.name + '</td><td>' + str(self.width) + '</td><td>' + self.description + '</td>')
-        lHtml.append('</tr>')
-        return lHtml
+        return self.build_html().create()
 
 
 class protocol():
@@ -28,14 +41,16 @@ class protocol():
             self.paragraphs = []
         self.paragraphs.append(sText)
 
-    def create(self):
+    def build_html(self):
         lHtml = []
-        lHtml.append('<h4>' + self.name + '</h4>')
+        lHtml.append(html.h(4, self.name))
         if self.paragraphs:
             for paragraph in self.paragraphs:
-                lHtml.append('<p>' + paragraph + '</p>')
+                lHtml.append(html.p(paragraph))
         if self.imageLink:
-            lHtml.append('<img src="' + self.imageLink + '" class="img-responsive">')
+            oImg = html.img(self.imageLink)
+            oImg.add_class('img-responsive')
+            lHtml.append(oImg)
         return lHtml
 
 
@@ -62,22 +77,34 @@ class create():
             self.protocols = []
         self.protocols.append(oProtocol)
 
-    def create(self):
+    def build_html(self):
         lHtml = []
-        lHtml.append('<h3>Interface 1</h3>')
+        lHtml.append(html.h(3, self.name))
         if self.paragraphs:
             for text in self.paragraphs:
-                lHtml.append('<p>' + text + '</p>')
+                lHtml.append(html.p(text))
         if self.signals:
-            lHtml.append('<table class="table table-striped table-bordered">')
-            lHtml.append('<tr>')
-            lHtml.append('<th>Signal</th><th>Width</th><th>Description</th>')
-            lHtml.append('</tr>')
+            oTable = html.tag('table')
+            oTable.add_class('table')
+            oTable.add_class('table-striped')
+            oTable.add_class('table-bordered')
+            oTr = html.tr()
+            oTr.add_tag(html.th('Signal'))
+            oTr.add_tag(html.th('Width'))
+            oTr.add_tag(html.th('Description'))
+            oTable.add_tag(oTr)
             for signal in self.signals:
-                lHtml.extend(signal.create())
-            lHtml.append('</table>')
+                oTable.add_tag(signal.build_html())
+            lHtml.append(oTable)
+
         if self.protocols:
             for protocol in self.protocols:
-                lHtml.extend(protocol.create())
+                lHtml.extend(protocol.build_html())
 
+        return lHtml
+
+    def create(self):
+        lHtml = []
+        for oHtml in self.build_html():
+            lHtml.extend(oHtml.create())
         return lHtml

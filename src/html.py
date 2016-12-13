@@ -55,7 +55,8 @@ class tag():
             self.openTag = self.openTag[:-1] + '"'
 
         if self.dataToggle:
-            self.openTag = self.openTag + ' data-toggle="' + self.dataToggle + '"'
+            self.openTag = self.openTag + ' data-toggle="' + \
+                           self.dataToggle + '"'
 
         self.openTag = self.openTag + '>'
         self.tag.append(self.openTag)
@@ -105,22 +106,6 @@ class head(tag):
     def __init__(self):
         tag.__init__(self, 'head')
 
-#  def add_bootstrap(self):
-#    self.tags = []
-#    oMeta = meta()
-#    oMeta.add_meta_item('charset="utf-8"')
-#    self.tags.append(oMeta)
-#    oMeta = meta()
-#    oMeta.add_meta_item('name="viewport"')
-#    oMeta.add_meta_item('content="width=device-width, initial-scale=1"')
-#    self.tags.append(oMeta)
-#    oLink = link()
-#    oLink.rel = 'stylesheet'
-#    oLink.href = 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'
-#    self.tags.append(oLink)
-#    self.tags.append(script('https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'))
-#    self.tags.append(script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'))
-
 
 class script(tag):
 
@@ -149,9 +134,10 @@ class ul(tag):
 
 class li(tag):
 
-    def __init__(self,linkText=None):
+    def __init__(self, linkText=None):
         tag.__init__(self, 'li')
         self.linkText = linkText
+
 
 class p(tag):
 
@@ -168,14 +154,42 @@ class a(tag):
 
 
 class h1(tag):
-    
+
     def __init__(self, linkText):
         tag.__init__(self, 'h1')
         self.linkText = linkText
 
 
 class h2(tag):
-    
+
     def __init__(self, linkText):
         tag.__init__(self, 'h2')
         self.linkText = linkText
+
+
+class h(tag):
+
+    def __init__(self, level, sText):
+        tag.__init__(self, 'h' + str(level))
+        self.linkText = sText
+
+
+class tr(tag):
+
+    def __init__(self):
+        tag.__init__(self, 'tr')
+
+
+class th(tag):
+
+    def __init__(self, sText):
+        tag.__init__(self, 'th')
+        self.linkText = sText
+
+
+class img(tag):
+
+    def __init__(self, sText):
+        tag.__init__(self, 'img')
+        self.closeTag = False
+        self.source = sText
