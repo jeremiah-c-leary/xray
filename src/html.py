@@ -43,7 +43,7 @@ class tag():
             self.openTag = self.openTag + ' href="' + self.href + '"'
 
         if self.colspan:
-            self.openTag = self.openTag + ' colspan="' + str(self.colspan) + '"'
+            self.openTag += ' colspan="' + str(self.colspan) + '"'
 
         if self.meta_items:
             for metaItem in self.meta_items:
@@ -186,7 +186,7 @@ class tr(tag):
 
 class td(tag):
 
-    def __init__(self,sText):
+    def __init__(self, sText):
         tag.__init__(self, 'td')
         self.linkText = sText
 

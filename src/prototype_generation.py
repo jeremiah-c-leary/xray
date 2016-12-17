@@ -3,6 +3,7 @@
 
 import html
 import interface
+import vhdl
 
 def build_head():
 
@@ -242,6 +243,21 @@ def main():
 
   oBody.add_tag(html.h(2,'Interface Diagram'))
   oBody.add_tag(html.img('img/block_interface.svg'))
+
+  oBody.add_tag(html.h(2,'Port Map'))
+
+  oEntity = vhdl.entity('entity1')
+  oPortMap = vhdl.port_map()
+  oInterface = vhdl.interface('name1')
+  oInterface.add_port(vhdl.port('port1','in','std_logic','comment1'))
+  oPortMap.add_interface(oInterface)
+  oInterface = vhdl.interface('name2')
+  oInterface.add_port(vhdl.port('port2','out','std_logic_vector(13 downto 0)','comment2'))
+  oPortMap.add_interface(oInterface)
+
+  oEntity.portMap = oPortMap
+
+  oBody.add_tag(oEntity.build_html()[0])
 
   oBody.add_tag(html.h2('Interfaces'))
 
