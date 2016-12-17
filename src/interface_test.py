@@ -4,7 +4,7 @@ import unittest
 class testInterfaceMethos(unittest.TestCase):
 
     def test_interface_creation(self):
-        oInterface = interface.create('Watchdog')
+        oInterface = interface.interface('Watchdog')
         self.assertEqual(oInterface.name,'Watchdog')
 
     def test_signal_creation(self):
@@ -31,7 +31,7 @@ class testInterfaceMethos(unittest.TestCase):
         self.assertEqual(oProtocol.imageLink,'This is an image link')
 
     def test_interface_with_signals(self):
-        oInterface = interface.create('First Interface')
+        oInterface = interface.interface('First Interface')
         oSignal = interface.signal('Signal Name1',1,'Signal Description1')
         self.assertEqual(oSignal.name,'Signal Name1')
         self.assertEqual(oSignal.width,1)
@@ -120,7 +120,7 @@ class testInterfaceMethos(unittest.TestCase):
         lResults.append('</p>')
         lResults.append('<img src="image source" class="img-responsive">')
         oSignal = interface.signal('Signal 1',4,'This is a description')
-        oInterface = interface.create('Interface 1')
+        oInterface = interface.interface('Interface 1')
         oInterface.add_signal(oSignal)
         oSignal = interface.signal('Signal 2',16,'This is another description')
         oInterface.add_signal(oSignal)

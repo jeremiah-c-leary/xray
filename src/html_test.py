@@ -39,16 +39,6 @@ class testHtmlMethods(unittest.TestCase):
         oScript = html.script('Hello')
         self.assertEqual(oScript.create(),['<script src="Hello">','</script>'])
 
-    def test_add_bootstrap_to_header(self):
-	oHeader = html.head()
-	oHeader.add_bootstrap()
-	self.assertEqual(oHeader.tags[0].meta_items[0],'charset="utf-8"')
-	self.assertEqual(oHeader.tags[1].meta_items[0],'name="viewport"')
-	self.assertEqual(oHeader.tags[1].meta_items[1],'content="width=device-width, initial-scale=1"')
-	self.assertEqual(oHeader.tags[2].rel,'stylesheet')
-        self.assertEqual(oHeader.tags[2].href,'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
-	self.assertEqual(oHeader.tags[3].source,'https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
-	self.assertEqual(oHeader.tags[4].source,'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
 
     def test_header_create_with_empty_item_list(self):
         oHeader = html.head()
@@ -86,39 +76,6 @@ class testHtmlMethods(unittest.TestCase):
         oMeta.add_meta_item('three')
         self.assertEqual(oMeta.create(),['<meta one two three>'])
 
-    def test_header_create_with_bootstrap(self):
-        lResult = []
-        lResult.append('  <head>')
-        lResult.append('    <meta charset="utf-8">')
-        lResult.append('    <meta name="viewport" content="width=device-width, initial-scale=1">')
-        lResult.append('    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">')
-        lResult.append('    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">')
-        lResult.append('    </script>')
-        lResult.append('    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">')
-        lResult.append('    </script>')
-        lResult.append('  </head>')
-        oHeader = html.head()
-        oHeader.add_bootstrap()
-        self.assertEqual(oHeader.create(indent=2,level=1),lResult)
-
-    def test_html_create_with_bootstrap(self):
-        lResult = []
-        lResult.append('<html lang="en">')
-        lResult.append('  <head>')
-        lResult.append('    <meta charset="utf-8">')
-        lResult.append('    <meta name="viewport" content="width=device-width, initial-scale=1">')
-        lResult.append('    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">')
-        lResult.append('    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">')
-        lResult.append('    </script>')
-        lResult.append('    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">')
-        lResult.append('    </script>')
-        lResult.append('  </head>')
-        lResult.append('</html>')
-        oHeader = html.head()
-        oHeader.add_bootstrap()
-        oHtml = html.html()
-        oHtml.add_tag(oHeader)
-        self.assertEqual(oHtml.create(indent=2),lResult)
 
     def test_tag_name(self):
        oTag = html.tag('tag_name')

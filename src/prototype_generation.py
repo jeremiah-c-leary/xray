@@ -2,6 +2,7 @@
 
 
 import html
+import interface
 
 def build_head():
 
@@ -96,6 +97,8 @@ def menu_item(sHref,sName):
 
 def main():
 
+  lInternalInterfaces = []
+  lExternalInterfaces = []
 
   # Generate navbar
   oFPGA_one = menu_item('fpga_one.html','One')
@@ -104,8 +107,8 @@ def main():
   oFPGAMenu = build_drop_menu('FPGA',[oFPGA_one,oFPGA_two,oFPGA_three])
   oBlockCMenu = menu_item('block_c.html','Block C')
   oBlockMenu = build_drop_menu('Block',[oBlockCMenu])
-  oInterface_external = menu_item('#interfaces-external','External')
-  oInterface_internal = menu_item('#interfaces-internal','Internal')
+  oInterface_external = menu_item('external_interfaces.html','External')
+  oInterface_internal = menu_item('internal_interfaces.html','Internal')
   oInterfaceMenu = build_drop_menu('Interfaces',[oInterface_external,oInterface_internal])
   oNavBar = build_navbar('system.html','Project A',[oFPGAMenu,oBlockMenu,oInterfaceMenu])
 
@@ -123,8 +126,42 @@ def main():
   oHtmlTag.add_tag(oBody)
 
   # Create Interface
+  oLedInterface = interface.interface('LED Interface')
+  oLedInterface.add_paragraph('The LED Interface allows the block to use the three LEDs attached to the FPGA to indicate status to the user.')
+  oLedInterface.add_signal(interface.signal('clk',1,'System clock'))
+  oLedInterface.add_signal(interface.signal('green_led','1','Turns on green LED when asserted.'))
+  oLedInterface.add_signal(interface.signal('red_led','1','Turns on red LED when asserted.'))
+  oProtocol=interface.protocol('Operation Valid Protocol')
+  oProtocol.imageLink = 'img/led_interface-operation_valid_protocol.svg'
+  oLedInterface.add_protocol(oProtocol)
+  oProtocol=interface.protocol('Watchdog Error Protocol')
+  oProtocol.imageLink = 'img/led_interface-watchdog_error_protocol.svg'
+  oLedInterface.add_protocol(oProtocol)
 
-  # Write System level HTML to file
+  lExternalInterfaces.append(oLedInterface)
+
+  oWatchdogMonitorInterface = interface.interface('Watchdog Monitor Interface')
+  oWatchdogMonitorInterface.add_paragraph('The Watchdog Monitor Interface is a single discrete that pulses for one clock every 1 us.')
+  oWatchdogMonitorInterface.add_signal(interface.signal('clk',1,'System clock'))
+  oWatchdogMonitorInterface.add_signal(interface.signal('alive',1,'Indicates the source is still running.'))
+  oProtocol=interface.protocol('Watchdog Discrete Protocol')
+  oProtocol.imageLink = 'img/watchdog_interface.svg'
+  oWatchdogMonitorInterface.add_protocol(oProtocol)
+
+  lInternalInterfaces.append(oWatchdogMonitorInterface)
+
+  oWatchdogUptimeInterface = interface.interface('Watchdog Uptime Interface')
+  oWatchdogUptimeInterface.add_paragraph('The Watchdog Uptime Interface reports the number of 1 us counts when the watchdog timer tripped.  This lets the system report uptime statistics')
+  oWatchdogUptimeInterface.add_signal(interface.signal('clk',1,'System clock'))
+  oWatchdogUptimeInterface.add_signal(interface.signal('watchdog_trip',1,'Pulse indicating the watchdog has tripped.'))
+  oWatchdogUptimeInterface.add_signal(interface.signal('uptime_count',16,'Reports the uptime from system startup when the watchdog tripped.'))
+  oProtocol=interface.protocol('Uptime Valid Protocol')
+  oProtocol.imageLink = 'img/watchdog_uptime_interface-uptime_valid.svg'
+  oWatchdogUptimeInterface.add_protocol(oProtocol)
+
+  lInternalInterfaces.append(oWatchdogUptimeInterface)
+
+# Write System level HTML to file
   fHtml = open ('system.html','w')
   fHtml.writelines(oHtmlTag.create())
   fHtml.close()
@@ -203,7 +240,14 @@ def main():
   
   oBody.add_tag(oUl)
 
+  oBody.add_tag(html.h(2,'Interface Diagram'))
+  oBody.add_tag(html.img('img/block_interface.svg'))
 
+  oBody.add_tag(html.h2('Interfaces'))
+
+  for oInterface in lInternalInterfaces + lExternalInterfaces:
+    for oTag in oInterface.build_html():
+      oBody.add_tag(oTag)
 
   oHtmlTag.add_tag(oBody)
 
@@ -213,7 +257,41 @@ def main():
   fHtml.close()
 
 
-  print oHeadTag.create()
+  # Create Internal Interfaces 
+  # Generate html
+  oHtmlTag = html.html()
+  # Generate head
+  oHeadTag = build_head()
+  oHtmlTag.add_tag(oHeadTag)
+  oBody = html.body()
+  oBody.add_tag(oNavBar)
+  for oInterface in lInternalInterfaces:
+    for oTag in oInterface.build_html():
+      oBody.add_tag(oTag)
+  oHtmlTag.add_tag(oBody)
+
+  # Write System level HTML to file
+  fHtml = open ('internal_interfaces.html','w')
+  fHtml.writelines(oHtmlTag.create())
+  fHtml.close()
+
+  # Create External Interfaces 
+  # Generate html
+  oHtmlTag = html.html()
+  # Generate head
+  oHeadTag = build_head()
+  oHtmlTag.add_tag(oHeadTag)
+  oBody = html.body()
+  oBody.add_tag(oNavBar)
+  for oInterface in lExternalInterfaces:
+    for oTag in oInterface.build_html():
+      oBody.add_tag(oTag)
+  oHtmlTag.add_tag(oBody)
+
+  # Write System level HTML to file
+  fHtml = open ('external_interfaces.html','w')
+  fHtml.writelines(oHtmlTag.create())
+  fHtml.close()
 
 
 if __name__ == '__main__':

@@ -54,7 +54,7 @@ class protocol():
         return lHtml
 
 
-class create():
+class interface():
 
     def __init__(self, sName=None):
         self.name = sName
