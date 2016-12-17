@@ -13,6 +13,7 @@ class tag():
         self.linkText = None
         self.dataToggle = None
         self.id = None
+        self.colspan = None
 
     def add_tag(self, item):
         if not self.tags:
@@ -40,6 +41,9 @@ class tag():
 
         if self.href:
             self.openTag = self.openTag + ' href="' + self.href + '"'
+
+        if self.colspan:
+            self.openTag = self.openTag + ' colspan="' + str(self.colspan) + '"'
 
         if self.meta_items:
             for metaItem in self.meta_items:
@@ -180,6 +184,13 @@ class tr(tag):
         tag.__init__(self, 'tr')
 
 
+class td(tag):
+
+    def __init__(self,sText):
+        tag.__init__(self, 'td')
+        self.linkText = sText
+
+
 class th(tag):
 
     def __init__(self, sText):
@@ -193,3 +204,9 @@ class img(tag):
         tag.__init__(self, 'img')
         self.closeTag = False
         self.source = sText
+
+
+class table(tag):
+
+    def __init__(self):
+        tag.__init__(self, 'table')

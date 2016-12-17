@@ -233,5 +233,56 @@ class testHtmlMethods(unittest.TestCase):
        oNav.tags[0].add_tag(oUl)
        self.assertEqual(oNav.create(indent=2),lResult)
 
+    def test_table(self):
+        oTable = html.table()
+        lResult = []
+        lResult.append('<table>')
+        lResult.append('</table>')
+        self.assertEqual(oTable.create(),lResult)
+
+    def test_table_with_rows(self):
+        oTable = html.table()
+        oTable.add_tag(html.tr())
+        oTable.add_tag(html.tr())
+        lResult = []
+        lResult.append('<table>')
+        lResult.append('<tr>')
+        lResult.append('</tr>')
+        lResult.append('<tr>')
+        lResult.append('</tr>')
+        lResult.append('</table>')
+        self.assertEqual(oTable.create(),lResult)
+
+    def test_table_with_rows_and_columns(self):
+        oTable = html.table()
+        oTr = html.tr()
+        oTr.add_tag(html.td('row1,column1'))
+        oTr.add_tag(html.td('row1,column2'))
+        oTable.add_tag(oTr)
+        oTr = html.tr()
+        oTr.add_tag(html.td('row2,column1'))
+        oTr.add_tag(html.td('row2,column2'))
+        oTable.add_tag(oTr)
+        lResult = []
+        lResult.append('<table>')
+        lResult.append('<tr>')
+        lResult.append('<td>')
+        lResult.append('row1,column1')
+        lResult.append('</td>')
+        lResult.append('<td>')
+        lResult.append('row1,column2')
+        lResult.append('</td>')
+        lResult.append('</tr>')
+        lResult.append('<tr>')
+        lResult.append('<td>')
+        lResult.append('row2,column1')
+        lResult.append('</td>')
+        lResult.append('<td>')
+        lResult.append('row2,column2')
+        lResult.append('</td>')
+        lResult.append('</tr>')
+        lResult.append('</table>')
+        self.assertEqual(oTable.create(),lResult)
+
 if __name__ == '__main__':
     unittest.main()
