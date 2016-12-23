@@ -1,0 +1,32 @@
+Interfaces
+==========
+
+Interfaces describe behavior at the boundary of part of the design.
+
+Internal interfaces are contracts between parts of a design.
+
+External interfaces are constraints on the design.
+External interfaces are already documented, so just point to the documentation.
+
+Goals of documentation
+----------------------
+
+
+
+Elements
+--------
+
+* name
+**  Unique for design
+**  Descriptive
+**  Consice
+* description
+** purpose
+* list of signals
+** name
+** width
+** Description
+* protocols
+** name
+** description
+** waveform
