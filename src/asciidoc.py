@@ -10,11 +10,31 @@ class file():
     def process(self, sFilename):
         self.sParagraph = ""
         self.header = ""
+        self.tableFlag = False
 
         with open(sFilename, 'r') as oFile:
             self.lLines = [line.rstrip() for line in oFile]
 
         for sLine in self.lLines:
+            # Search for tables
+            if self.tableFlag:
+                # Search for end of table
+                if re.search('^\|=+$', sLine) and self.tableFlag:
+                    self.objects.append(oTable)
+                    self.tableFlag = False
+                    continue
+
+                # Split table rows and add them to the Table
+                oTable.add_row(map(str.strip, re.split('\|', sLine)[1:]))
+
+                continue
+
+            # Search for beginning of table
+            if re.search('^\|=+$', sLine) and not self.tableFlag:
+                oTable = table()
+                self.tableFlag = True
+                continue
+
             # Search for block images
             if re.search('^image::.*\[\]$', sLine) and self.sParagraph == "":
                 self.sImagePath = re.split('[::|\[\]]', sLine)[2]
@@ -61,11 +81,21 @@ class heading():
 
 
 class paragraph():
+
     def __init__(self, sParagraph):
         self.sParagraph = sParagraph
 
 
 class block_image():
+
     def __init__(self, sImagePath):
         self.sImagePath = sImagePath
 
+
+class table():
+
+    def __init__(self):
+        self.lRows = []
+
+    def add_row(self, lRow):
+        self.lRows.append(lRow)

@@ -81,5 +81,29 @@ class testAsciidocMethods(unittest.TestCase):
         self.assertEqual(oFile.objects[4].sParagraph,'Sentence one.  image::img/image_b.png[]')
 
 
+    def test_table_object(self):
+        oTable = asciidoc.table()
+        oTable.add_row(['one','two','three'])
+        self.assertEqual(oTable.lRows[0], ['one','two','three'])
+
+    def test_table_object_with_multiple_rows(self):
+        oTable = asciidoc.table()
+        oTable.add_row(['one','two','three'])
+        oTable.add_row(['four','five','six'])
+        self.assertEqual(oTable.lRows[0], ['one','two','three'])
+        self.assertEqual(oTable.lRows[1], ['four','five','six'])
+
+    def test_asciidoc_file_with_tables(self):
+        oFile = asciidoc.file()
+        oFile.process('asciidoc-tables.adoc')
+        self.assertEqual(oFile.objects[0].sTitle,'One Interface')
+        self.assertEqual(oFile.objects[0].iLevel,1)
+        self.assertEqual(oFile.objects[1].sParagraph,'Lorem ipsum dolor sit amet, consectetur adipiscing elit.')
+        self.assertEqual(oFile.objects[2].lRows[0],['signal','width','description'])
+        self.assertEqual(oFile.objects[2].lRows[1],['sig_one','1','Donec sed sapien eu ligula dictum consectetur.'])
+        self.assertEqual(oFile.objects[2].lRows[2],['sig_two','16','Integer sodales ipsum ex, vitae auctor erat tristique nec.'])
+        self.assertEqual(oFile.objects[3].sParagraph,'Vestibulum vitae metus odio.')
+
+
 if __name__ == '__main__':
     unittest.main()
