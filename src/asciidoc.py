@@ -1,6 +1,6 @@
 
 import re
-
+import html
 
 class file():
 
@@ -72,6 +72,11 @@ class file():
             if re.search('^$', sLine):
                 self.sParagraph = ""
 
+    def build_html(self):
+        lHtml = []
+        for oObject in self.objects:
+            lHtml.extend(oObject.build_html())
+        return lHtml
 
 class heading():
 
@@ -79,18 +84,24 @@ class heading():
         self.sTitle = sTitle
         self.iLevel = iLevel
 
+    def build_html(self):
+        return html.h(self.iLevel,self.sTitle).create()
 
 class paragraph():
 
     def __init__(self, sParagraph):
         self.sParagraph = sParagraph
 
+    def build_html(self):
+        return html.p(self.sParagraph).create()
 
 class block_image():
 
     def __init__(self, sImagePath):
         self.sImagePath = sImagePath
 
+    def build_html(self):
+        return html.img(self.sImagePath).create()
 
 class table():
 
@@ -99,3 +110,13 @@ class table():
 
     def add_row(self, lRow):
         self.lRows.append(lRow)
+
+    def build_html(self):
+        oTable = html.table()
+        for lRow in self.lRows:
+            oTr = html.tr()
+            for sColumn in lRow:
+                oTr.add_tag(html.td(sColumn))
+            oTable.add_tag(oTr)
+        return oTable.create()
+

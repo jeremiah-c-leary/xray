@@ -104,6 +104,79 @@ class testAsciidocMethods(unittest.TestCase):
         self.assertEqual(oFile.objects[2].lRows[2],['sig_two','16','Integer sodales ipsum ex, vitae auctor erat tristique nec.'])
         self.assertEqual(oFile.objects[3].sParagraph,'Vestibulum vitae metus odio.')
 
+    def test_asciidoc_file_with_headers_html_generation(self):
+        oFile = asciidoc.file()
+        oFile.process('asciidoc-headers.adoc')
+        lExpected = []
+        lExpected.extend(['<h1>','One Interface','</h1>'])
+        lExpected.extend(['<h2>','First Protocol','</h2>'])
+        lExpected.extend(['<h2>','Second Protocol','</h2>'])
+        lExpected.extend(['<h3>','Third level header','</h3>'])
+        lExpected.extend(['<h4>','Fourth level header','</h4>'])
+        lExpected.extend(['<h5>','Fifth level header','</h5>'])
+        self.assertEqual(oFile.build_html(),lExpected)
+
+    def test_asciidoc_file_with_paragraphs_html_generation(self):
+        oFile = asciidoc.file()
+        oFile.process('asciidoc-paragraphs.adoc')
+        lExpected = []
+        lExpected.extend(['<h1>','One Interface','</h1>'])
+        lExpected.extend(['<p>','Paragraph one.','</p>'])
+        lExpected.extend(['<h2>','First Protocol','</h2>'])
+        lExpected.extend(['<p>','Sentence one.  Sentence two.  Sentence three.','</p>'])
+        lExpected.extend(['<h2>','Second Protocol','</h2>'])
+        lExpected.extend(['<p>','Sentence four.','</p>'])
+        lExpected.extend(['<p>','Sentence five.','</p>'])
+        lExpected.extend(['<h3>','Third level header','</h3>'])
+        lExpected.extend(['<p>','Sentence six.','</p>'])
+        lExpected.extend(['<h4>','Fourth level header','</h4>'])
+        lExpected.extend(['<p>','Sentence seven.','</p>'])
+        lExpected.extend(['<h5>','Fifth level header','</h5>'])
+        lExpected.extend(['<p>','Sentence eight  sentence nine','</p>'])
+        lExpected.extend(['<p>','sentence ten  sentence eleven','</p>'])
+        self.assertEqual(oFile.build_html(),lExpected)
+
+
+    def test_asciidoc_file_with_images_html_generation(self):
+        oFile = asciidoc.file()
+        oFile.process('asciidoc-images.adoc')
+        lExpected = []
+        lExpected.extend(['<h1>','One Interface','</h1>'])
+        lExpected.extend(['<p>','Paragraph one.','</p>'])
+        lExpected.extend(['<h2>','First Protocol','</h2>'])
+        lExpected.extend(['<img src="img/image_a.png">'])
+        lExpected.extend(['<p>','Sentence one.  image::img/image_b.png[]','</p>'])
+        self.assertEqual(oFile.build_html(),lExpected)
+
+    def test_asciidoc_file_with_tables_html_generation(self):
+#        self.maxDiff = None
+        oFile = asciidoc.file()
+        oFile.process('asciidoc-tables.adoc')
+        lExpected = []
+        lExpected.extend(['<h1>','One Interface','</h1>'])
+        lExpected.extend(['<p>','Lorem ipsum dolor sit amet, consectetur adipiscing elit.','</p>'])
+        lExpected.append('<table>')
+        lExpected.append('<tr>')
+        lExpected.extend(['<td>','signal','</td>'])
+        lExpected.extend(['<td>','width','</td>'])
+        lExpected.extend(['<td>','description','</td>'])
+        lExpected.append('</tr>')
+        lExpected.append('<tr>')
+        lExpected.extend(['<td>','sig_one','</td>'])
+        lExpected.extend(['<td>','1','</td>'])
+        lExpected.extend(['<td>','Donec sed sapien eu ligula dictum consectetur.','</td>'])
+        lExpected.append('</tr>')
+        lExpected.append('<tr>')
+        lExpected.extend(['<td>','sig_two','</td>'])
+        lExpected.extend(['<td>','16','</td>'])
+        lExpected.extend(['<td>','Integer sodales ipsum ex, vitae auctor erat tristique nec.','</td>'])
+        lExpected.append('</tr>')
+        lExpected.append('</table>')
+        lExpected.extend(['<p>','Vestibulum vitae metus odio.','</p>'])
+        self.assertEqual(oFile.build_html(),lExpected)
+
+
+
 
 if __name__ == '__main__':
     unittest.main()
