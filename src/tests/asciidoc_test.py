@@ -65,5 +65,21 @@ class testAsciidocMethods(unittest.TestCase):
         self.assertEqual(oFile.objects[13].sParagraph,'sentence ten  sentence eleven')
 
 
+    def test_block_image_object(self):
+        oImage = asciidoc.block_image('image_path')
+        self.assertEqual(oImage.sImagePath,'image_path')
+
+    def test_asciidoc_file_with_images(self):
+        oFile = asciidoc.file()
+        oFile.process('asciidoc-images.adoc')
+        self.assertEqual(oFile.objects[0].sTitle,'One Interface')
+        self.assertEqual(oFile.objects[0].iLevel,1)
+        self.assertEqual(oFile.objects[1].sParagraph,'Paragraph one.')
+        self.assertEqual(oFile.objects[2].sTitle,'First Protocol')
+        self.assertEqual(oFile.objects[2].iLevel,2)
+        self.assertEqual(oFile.objects[3].sImagePath,'img/image_a.png')
+        self.assertEqual(oFile.objects[4].sParagraph,'Sentence one.  image::img/image_b.png[]')
+
+
 if __name__ == '__main__':
     unittest.main()
