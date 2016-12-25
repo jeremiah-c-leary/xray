@@ -5,6 +5,7 @@ import unittest
 import xray
 import os
 
+
 class testAsciidocMethods(unittest.TestCase):
 
     def test_interface_list_exists(self):
@@ -15,7 +16,6 @@ class testAsciidocMethods(unittest.TestCase):
         self.assertEqual(xray.system('filename.blah').sFilename,'filename.blah')
 
     def test_system_builds_html(self):
-        self.maxDiff = None
         oSystem = xray.system('xray-system.adoc')
         lResults = []
         for oHtml in oSystem.build_html():
@@ -55,6 +55,20 @@ class testAsciidocMethods(unittest.TestCase):
         with open('xray-document_system-expected.html') as oFile:
             lExpected = oFile.readlines()
         self.assertEqual(lResults, lExpected)
+
+
+    def test_device_exist(self):
+        self.assertEqual(xray.device('filename.blah').sFilename,'filename.blah')
+
+    def test_device_build_html(self):
+        oDevice = xray.device('xray-device_a.adoc')
+        lResults = []
+        for oHtml in oDevice.build_html():
+          lResults.extend(oHtml.create()) 
+        lExpected = []
+        lExpected.extend(['<h1>','Device A','</h1>'])
+        lExpected.extend(['<p>','Tri-tip burgdoggen ground round turducken, ham venison drumstick t-bone kevin shank filet mignon short ribs brisket flank. Landjaeger tri-tip ribeye, drumstick andouille salami tenderloin beef swine pastrami porchetta chicken. Pork loin t-bone prosciutto landjaeger, shank ball tip pastrami pork. Tail drumstick shank, sausage flank brisket short ribs rump tenderloin. Short loin boudin sausage swine kevin. Short loin drumstick venison brisket turkey chuck ham pork chop beef ribs.','</p>'])
+        self.assertEqual(lResults[0:6],lExpected)
 
 
 if __name__ == '__main__':
