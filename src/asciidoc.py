@@ -5,8 +5,11 @@ import html
 
 class file():
 
-    def __init__(self):
+    def __init__(self, sFileName):
         self.objects = []
+        self.sFileName = sFileName
+        if self.sFileName:
+          self.process(sFileName)
 
     def process(self, sFilename):
         self.sParagraph = ""

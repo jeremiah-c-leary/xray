@@ -7,7 +7,7 @@ import asciidoc
 class testAsciidocMethods(unittest.TestCase):
 
     def test_asciidoc_object_exists(self):
-        self.assertTrue(asciidoc.file())
+        self.assertTrue(asciidoc.file(None))
 
     def test_heading(self):
         self.assertTrue(asciidoc.heading(None,None))
@@ -21,8 +21,8 @@ class testAsciidocMethods(unittest.TestCase):
         self.assertEqual(oHeading.iLevel,2)
 
     def test_asciidoc_file_with_headers(self):
-        oFile = asciidoc.file()
-        oFile.process('asciidoc-headers.adoc')
+        oFile = asciidoc.file('asciidoc-headers.adoc')
+#        oFile.process('asciidoc-headers.adoc')
         self.assertEqual(oFile.objects[0].sTitle,'One Interface')
         self.assertEqual(oFile.objects[0].iLevel,1)
         self.assertEqual(oFile.objects[1].sTitle,'First Protocol')
@@ -41,8 +41,7 @@ class testAsciidocMethods(unittest.TestCase):
         self.assertEqual(oParagraph.sParagraph,'paragraph')
 
     def test_asciidoc_file_with_headers_and_paragraphs(self):
-        oFile = asciidoc.file()
-        oFile.process('asciidoc-paragraphs.adoc')
+        oFile = asciidoc.file('asciidoc-paragraphs.adoc')
         self.assertEqual(oFile.objects[0].sTitle,'One Interface')
         self.assertEqual(oFile.objects[0].iLevel,1)
         self.assertEqual(oFile.objects[1].sParagraph,'Paragraph one.')
@@ -70,8 +69,7 @@ class testAsciidocMethods(unittest.TestCase):
         self.assertEqual(oImage.sImagePath,'image_path')
 
     def test_asciidoc_file_with_images(self):
-        oFile = asciidoc.file()
-        oFile.process('asciidoc-images.adoc')
+        oFile = asciidoc.file('asciidoc-images.adoc')
         self.assertEqual(oFile.objects[0].sTitle,'One Interface')
         self.assertEqual(oFile.objects[0].iLevel,1)
         self.assertEqual(oFile.objects[1].sParagraph,'Paragraph one.')
@@ -94,8 +92,7 @@ class testAsciidocMethods(unittest.TestCase):
         self.assertEqual(oTable.lRows[1], ['four','five','six'])
 
     def test_asciidoc_file_with_tables(self):
-        oFile = asciidoc.file()
-        oFile.process('asciidoc-tables.adoc')
+        oFile = asciidoc.file('asciidoc-tables.adoc')
         self.assertEqual(oFile.objects[0].sTitle,'One Interface')
         self.assertEqual(oFile.objects[0].iLevel,1)
         self.assertEqual(oFile.objects[1].sParagraph,'Lorem ipsum dolor sit amet, consectetur adipiscing elit.')
@@ -105,8 +102,7 @@ class testAsciidocMethods(unittest.TestCase):
         self.assertEqual(oFile.objects[3].sParagraph,'Vestibulum vitae metus odio.')
 
     def test_asciidoc_file_with_headers_html_generation(self):
-        oFile = asciidoc.file()
-        oFile.process('asciidoc-headers.adoc')
+        oFile = asciidoc.file('asciidoc-headers.adoc')
         lExpected = []
         lExpected.extend(['<h1>','One Interface','</h1>'])
         lExpected.extend(['<h2>','First Protocol','</h2>'])
@@ -120,8 +116,7 @@ class testAsciidocMethods(unittest.TestCase):
         self.assertEqual(lResults,lExpected)
 
     def test_asciidoc_file_with_paragraphs_html_generation(self):
-        oFile = asciidoc.file()
-        oFile.process('asciidoc-paragraphs.adoc')
+        oFile = asciidoc.file('asciidoc-paragraphs.adoc')
         lExpected = []
         lExpected.extend(['<h1>','One Interface','</h1>'])
         lExpected.extend(['<p>','Paragraph one.','</p>'])
@@ -144,8 +139,7 @@ class testAsciidocMethods(unittest.TestCase):
 
 
     def test_asciidoc_file_with_images_html_generation(self):
-        oFile = asciidoc.file()
-        oFile.process('asciidoc-images.adoc')
+        oFile = asciidoc.file('asciidoc-images.adoc')
         lExpected = []
         lExpected.extend(['<h1>','One Interface','</h1>'])
         lExpected.extend(['<p>','Paragraph one.','</p>'])
@@ -158,8 +152,7 @@ class testAsciidocMethods(unittest.TestCase):
         self.assertEqual(lResults,lExpected)
 
     def test_asciidoc_file_with_tables_html_generation(self):
-        oFile = asciidoc.file()
-        oFile.process('asciidoc-tables.adoc')
+        oFile = asciidoc.file('asciidoc-tables.adoc')
         lExpected = []
         lExpected.extend(['<h1>','One Interface','</h1>'])
         lExpected.extend(['<p>','Lorem ipsum dolor sit amet, consectetur adipiscing elit.','</p>'])
