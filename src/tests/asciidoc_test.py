@@ -114,7 +114,10 @@ class testAsciidocMethods(unittest.TestCase):
         lExpected.extend(['<h3>','Third level header','</h3>'])
         lExpected.extend(['<h4>','Fourth level header','</h4>'])
         lExpected.extend(['<h5>','Fifth level header','</h5>'])
-        self.assertEqual(oFile.build_html(),lExpected)
+        lResults = []
+        for oHtml in oFile.build_html():
+            lResults.extend(oHtml.create())
+        self.assertEqual(lResults,lExpected)
 
     def test_asciidoc_file_with_paragraphs_html_generation(self):
         oFile = asciidoc.file()
@@ -134,7 +137,10 @@ class testAsciidocMethods(unittest.TestCase):
         lExpected.extend(['<h5>','Fifth level header','</h5>'])
         lExpected.extend(['<p>','Sentence eight  sentence nine','</p>'])
         lExpected.extend(['<p>','sentence ten  sentence eleven','</p>'])
-        self.assertEqual(oFile.build_html(),lExpected)
+        lResults = []
+        for oHtml in oFile.build_html():
+            lResults.extend(oHtml.create())
+        self.assertEqual(lResults,lExpected)
 
 
     def test_asciidoc_file_with_images_html_generation(self):
@@ -146,10 +152,12 @@ class testAsciidocMethods(unittest.TestCase):
         lExpected.extend(['<h2>','First Protocol','</h2>'])
         lExpected.extend(['<img src="img/image_a.png">'])
         lExpected.extend(['<p>','Sentence one.  image::img/image_b.png[]','</p>'])
-        self.assertEqual(oFile.build_html(),lExpected)
+        lResults = []
+        for oHtml in oFile.build_html():
+            lResults.extend(oHtml.create())
+        self.assertEqual(lResults,lExpected)
 
     def test_asciidoc_file_with_tables_html_generation(self):
-#        self.maxDiff = None
         oFile = asciidoc.file()
         oFile.process('asciidoc-tables.adoc')
         lExpected = []
@@ -173,9 +181,10 @@ class testAsciidocMethods(unittest.TestCase):
         lExpected.append('</tr>')
         lExpected.append('</table>')
         lExpected.extend(['<p>','Vestibulum vitae metus odio.','</p>'])
-        self.assertEqual(oFile.build_html(),lExpected)
-
-
+        lResults = []
+        for oHtml in oFile.build_html():
+            lResults.extend(oHtml.create())
+        self.assertEqual(lResults,lExpected)
 
 
 if __name__ == '__main__':

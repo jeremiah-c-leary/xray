@@ -2,6 +2,7 @@
 import re
 import html
 
+
 class file():
 
     def __init__(self):
@@ -75,8 +76,9 @@ class file():
     def build_html(self):
         lHtml = []
         for oObject in self.objects:
-            lHtml.extend(oObject.build_html())
+            lHtml.append(oObject.build_html())
         return lHtml
+
 
 class heading():
 
@@ -85,7 +87,8 @@ class heading():
         self.iLevel = iLevel
 
     def build_html(self):
-        return html.h(self.iLevel,self.sTitle).create()
+        return html.h(self.iLevel, self.sTitle)
+
 
 class paragraph():
 
@@ -93,7 +96,8 @@ class paragraph():
         self.sParagraph = sParagraph
 
     def build_html(self):
-        return html.p(self.sParagraph).create()
+        return html.p(self.sParagraph)
+
 
 class block_image():
 
@@ -101,7 +105,8 @@ class block_image():
         self.sImagePath = sImagePath
 
     def build_html(self):
-        return html.img(self.sImagePath).create()
+        return html.img(self.sImagePath)
+
 
 class table():
 
@@ -118,5 +123,4 @@ class table():
             for sColumn in lRow:
                 oTr.add_tag(html.td(sColumn))
             oTable.add_tag(oTr)
-        return oTable.create()
-
+        return oTable
