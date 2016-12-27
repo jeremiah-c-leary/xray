@@ -1,0 +1,41 @@
+
+Device B
+========
+
+Sed sed ex molestie, mollis eros porta, imperdiet odio.
+Praesent faucibus dolor tellus, eget pretium nulla convallis id.
+Nullam eget justo lacinia, accumsan justo et, egestas libero.
+Donec sed ipsum semper, commodo augue nec, vehicula nisl.
+Nulla posuere orci et semper sagittis.
+Aliquam viverra urna erat, egestas ultricies nibh tincidunt nec.
+Etiam velit massa, euismod sit amet fermentum in, mattis sit amet purus.
+Curabitur feugiat dolor nunc, quis vestibulum ligula sollicitudin quis.
+Nam mollis tortor in sapien auctor auctor.
+Donec egestas ex vel mauris porta tempus.
+Donec quis tempus diam.
+In efficitur interdum sapien dictum convallis.
+Vivamus velit purus, venenatis id elementum non, mollis egestas turpis.
+Duis tempor est sed purus tincidunt bibendum.
+Mauris ac ornare orci.
+
+Donec et nunc ut neque elementum hendrerit.
+Praesent auctor sapien et augue dignissim, in imperdiet ligula posuere.
+Quisque nec dui eleifend orci auctor viverra a a odio.
+Ut pretium libero id arcu iaculis, quis vestibulum odio rutrum.
+Curabitur at nisl sit amet dui vulputate interdum.
+Morbi et augue a dui convallis porta id quis tellus.
+Suspendisse aliquam sem elementum mauris convallis suscipit.
+Sed convallis quam a urna sodales, eu tristique turpis mattis.
+Aenean vestibulum tempus lobortis.
+Fusce tincidunt cursus pretium.
+Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
+
+Pellentesque laoreet nibh at dolor pretium, in lacinia risus cursus.
+Integer et fringilla mauris.
+Ut eu lorem mauris.
+Vestibulum posuere elit elit.
+Vestibulum egestas pretium lacus tincidunt posuere.
+Proin in pellentesque lectus.
+In accumsan eu turpis quis venenatis.
+Nullam volutpat, nunc sit amet blandit feugiat, massa turpis varius metus, a commodo dui urna vel ligula.
+
