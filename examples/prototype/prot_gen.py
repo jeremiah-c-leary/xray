@@ -18,6 +18,9 @@ def main():
     # Add the device
     oDocument.add_object(xray.device('xray-device_b.adoc'))
 
+    oDocument.add_object(xray.interface('xray-interface_a.adoc'))
+    oDocument.add_object(xray.interface('xray-interface_b.adoc'))
+
     # Create the HTML
     oDocument.create_html()
 

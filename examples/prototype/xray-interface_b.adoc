@@ -1,0 +1,26 @@
+Interface B
+===========
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Fusce aliquet eleifend ante, a vestibulum dui.
+Sed vel arcu eu erat viverra finibus eget ut dolor.
+In blandit, est tincidunt ornare vehicula, metus neque consectetur nulla, ac venenatis orci tortor nec libero.
+Vestibulum vitae metus odio.
+
+|=================================
+| signal   | width | description
+| sig_one  |   1   | Donec sed sapien eu ligula dictum consectetur. 
+| sig_two  |  16   | Integer sodales ipsum ex, vitae auctor erat tristique nec.
+|=================================
+
+
+First Protocol
+--------------
+
+Interdum et malesuada fames ac ante ipsum primis in faucibus.
+Cras finibus, sem eget vulputate euismod, massa purus faucibus ligula, vel eleifend nisl enim vitae ex.
+Aenean a euismod arcu, vel hendrerit lorem.
+
+image::img/one_interface-first_protocol.png[]
+
+

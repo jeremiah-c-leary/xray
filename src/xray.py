@@ -137,6 +137,9 @@ class document():
     def create_navbar(self):
         lDevices = None
         oDeviceMenu = None
+        lInterfaces = None
+        oInterfaceMenu = None
+        lMenuOptions = None
         for oObject in self.lObjects:
             if isinstance(oObject, system):
                 lHtmlObjects = oObject.build_html()
@@ -149,15 +152,31 @@ class document():
                 if not lDevices:
                     lDevices = []
                 lDevices.append(menu_item(sDeviceFileName, sDeviceName))
+            if isinstance(oObject, interface):
+                lHtmlObjects = oObject.build_html()
+                sFileName = self.build_filename(sSystemName, lHtmlObjects[0].create()[1])
+                sName = lHtmlObjects[0].create()[1]
+                if not lInterfaces:
+                    lInterfaces = []
+                lInterfaces.append(menu_item(sFileName, sName))
         if lDevices:
+            if not lMenuOptions:
+                lMenuOptions = []
             if len(lDevices) == 1:
                 oDeviceMenu = lDevices[0]
             else:
                 oDeviceMenu = build_drop_menu('Devices', lDevices)
-        if oDeviceMenu:
-          return build_navbar(sSystemHtmlFileName, sSystemName, [oDeviceMenu])
-        else:
-          return build_navbar(sSystemHtmlFileName, sSystemName, None)
+            lMenuOptions.append(oDeviceMenu)
+        if lInterfaces:
+            if not lMenuOptions:
+                lMenuOptions = []
+            if len(lInterfaces) == 1:
+                oInterfaceMenu = lInterfaces[0]
+            else:
+                oInterfaceMenu = build_drop_menu('Interfaces', lInterfaces)
+            lMenuOptions.append(oInterfaceMenu)
+
+        return build_navbar(sSystemHtmlFileName, sSystemName, lMenuOptions)
 
     def create_html(self):
         oNavBar = self.create_navbar()
@@ -197,6 +216,21 @@ class document():
                     for sTag in oHtmlFile.create():
                         oFile.write(sTag + '\n')
 
+            if isinstance(oObject, interface):
+                lHtmlObjects = oObject.build_html()
+                sFileName = sSystemName.lower().replace(' ', '_') + '-' + lHtmlObjects[0].create()[1].lower().replace(' ', '_') + '.html'
+
+                oHtmlFile = html.html()
+                oHtmlFile.add_tag(build_head())
+                oBody = html.body()
+                oBody.add_tag(oNavBar)
+                for lHtmlObject in lHtmlObjects:
+                    oBody.add_tag(lHtmlObject)
+                oHtmlFile.add_tag(oBody)
+
+                with open(sFileName, 'w') as oFile:
+                    for sTag in oHtmlFile.create():
+                        oFile.write(sTag + '\n')
 
 class device():
 
