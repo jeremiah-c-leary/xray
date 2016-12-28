@@ -200,21 +200,7 @@ class document():
                         oFile.write(sTag + '\n')
 
             if isinstance(oObject, device):
-                lHtmlObjects = oObject.build_html()
-                sDeviceFileName = sSystemName.lower().replace(' ', '_') + '-' + lHtmlObjects[0].create()[1].lower().replace(' ', '_') + '.html'
-                sDeviceName = lHtmlObjects[0].create()[1]
-
-                oHtmlFile = html.html()
-                oHtmlFile.add_tag(build_head())
-                oBody = html.body()
-                oBody.add_tag(oNavBar)
-                for lHtmlObject in lHtmlObjects:
-                    oBody.add_tag(lHtmlObject)
-                oHtmlFile.add_tag(oBody)
-
-                with open(sDeviceFileName, 'w') as oFile:
-                    for sTag in oHtmlFile.create():
-                        oFile.write(sTag + '\n')
+                oObject.create_html(sSystemName, oNavBar)
 
             if isinstance(oObject, interface):
                 lHtmlObjects = oObject.build_html()
@@ -236,6 +222,34 @@ class device():
 
     def __init__(self, sFilename=None):
         self.sFilename = sFilename
+        self.lInterfaces = None
 
     def build_html(self):
         return asciidoc.file(self.sFilename).build_html()
+
+    def add_interface(self, oInterface):
+        if not self.lInterfaces:
+            self.lInterfaces = []
+        self.lInterface.append(oInterface)
+
+    def build_navbar(self):
+        if self.
+
+    def create_html(self, sSystemName, oSystemNavBar):
+        lHtmlObjects = self.build_html()
+        sDeviceFileName = sSystemName.lower().replace(' ', '_') + '-' + lHtmlObjects[0].create()[1].lower().replace(' ', '_') + '.html'
+        sDeviceName = lHtmlObjects[0].create()[1]
+
+        oHtmlFile = html.html()
+        oHtmlFile.add_tag(build_head())
+        oBody = html.body()
+        oBody.add_tag(oSystemNavBar)
+        oBody.add_tag(build_navbar(sDeviceFileName,sDeviceName,None))
+        for lHtmlObject in lHtmlObjects:
+            oBody.add_tag(lHtmlObject)
+        oHtmlFile.add_tag(oBody)
+
+        with open(sDeviceFileName, 'w') as oFile:
+            for sTag in oHtmlFile.create():
+                oFile.write(sTag + '\n')
+
