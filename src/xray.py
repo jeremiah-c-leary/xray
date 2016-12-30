@@ -105,20 +105,22 @@ def menu_item(sHref, sName):
 
 class interface():
 
-    def __init__(self, sFilename=None):
+    def __init__(self, sFilename):
         self.sFilename = sFilename
+        self.lHtml = asciidoc.file(self.sFilename).build_html()
 
     def build_html(self):
-        return asciidoc.file(self.sFilename).build_html()
+        return self.lHtml
 
 
 class system():
 
-    def __init__(self, sFilename=None):
+    def __init__(self, sFilename):
         self.sFilename = sFilename
+        self.lHtml = asciidoc.file(self.sFilename).build_html()
 
     def build_html(self):
-        return asciidoc.file(self.sFilename).build_html()
+        return self.lHtml
 
 
 class document():
@@ -220,20 +222,23 @@ class document():
 
 class device():
 
-    def __init__(self, sFilename=None):
+    def __init__(self, sFilename):
         self.sFilename = sFilename
+        self.lHtml = asciidoc.file(self.sFilename).build_html()
         self.lInterfaces = None
 
     def build_html(self):
-        return asciidoc.file(self.sFilename).build_html()
+        return self.lHtml
 
     def add_interface(self, oInterface):
         if not self.lInterfaces:
             self.lInterfaces = []
         self.lInterface.append(oInterface)
 
-    def build_navbar(self):
-        if self.
+#    def build_navbar(self):
+#        if self.interfaces:
+#            
+
 
     def create_html(self, sSystemName, oSystemNavBar):
         lHtmlObjects = self.build_html()

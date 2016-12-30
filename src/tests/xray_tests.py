@@ -8,8 +8,8 @@ import os
 
 class testAsciidocMethods(unittest.TestCase):
 
-    def test_interface_list_exists(self):
-        self.assertEqual(xray.interface('filename.blah').sFilename,'filename.blah')
+    def test_interface_exists(self):
+        self.assertEqual(xray.interface('xray-interface_a.adoc').sFilename,'xray-interface_a.adoc')
 
     def test_interface_builds_html(self):
         oInterface = xray.interface('xray-interface_a.adoc')
@@ -22,7 +22,7 @@ class testAsciidocMethods(unittest.TestCase):
         self.assertEqual(lResults[0:6],lExpected)
          
     def test_system_exits(self):
-        self.assertEqual(xray.system('filename.blah').sFilename,'filename.blah')
+        self.assertEqual(xray.system('xray-system.adoc').sFilename,'xray-system.adoc')
 
     def test_system_builds_html(self):
         oSystem = xray.system('xray-system.adoc')
@@ -40,9 +40,9 @@ class testAsciidocMethods(unittest.TestCase):
 
     def test_document_add_object(self):
         oDocument = xray.document()
-        oDocument.add_object(xray.system('filename.blah'))
+        oDocument.add_object(xray.system(None))
         self.assertEqual(len(oDocument.lObjects),1)
-        self.assertEqual(oDocument.lObjects[0].sFilename,'filename.blah')
+        self.assertEqual(oDocument.lObjects[0].sFilename,None)
 
     def test_document_creates_system_file(self):
         if os.path.exists('xray_system-system.html'):
@@ -66,8 +66,8 @@ class testAsciidocMethods(unittest.TestCase):
         self.assertEqual(lResults, lExpected)
 
 
-    def test_device_exist(self):
-        self.assertEqual(xray.device('filename.blah').sFilename,'filename.blah')
+    def test_device_exists(self):
+        self.assertEqual(xray.device('xray-device_a.adoc').sFilename,'xray-device_a.adoc')
 
     def test_device_build_html(self):
         oDevice = xray.device('xray-device_a.adoc')
