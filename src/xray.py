@@ -246,17 +246,20 @@ class device():
             self.lComponents = []
         self.lComponents.append(oComponent)
 
-    def create_navbar(self):
-        lMenuOptions = None
-        lDropDownMenuItems = []
-        oInterfaceMenu = None
-        if self.lInterfaces:
-            for oInterface in self.lInterfaces:
-                lDropDownMenuItems.append(menu_item(oInterface.sHtmlFilename, oInterface.sName))
-            oInterfaceMenu = build_drop_menu('Interfaces', lDropDownMenuItems)
+    def add_navbar_drop_down_menu(self, sName, lMenuOptions, lItems):
+        if lItems:
+            lDropDownMenuItems = []
+            for oItem in lItems:
+                lDropDownMenuItems.append(menu_item(oItem.sHtmlFilename, oItem.sName))
             if not lMenuOptions:
                 lMenuOptions = []
-            lMenuOptions.append(oInterfaceMenu)
+            lMenuOptions.append(build_drop_menu(sName, lDropDownMenuItems))
+        return lMenuOptions
+
+    def create_navbar(self):
+        lMenuOptions = None
+        lMenuOptions = self.add_navbar_drop_down_menu('Interfaces', lMenuOptions, self.lInterfaces)
+        lMenuOptions = self.add_navbar_drop_down_menu('Components', lMenuOptions, self.lComponents)
         return build_navbar(self.sHtmlFilename, self.sName, lMenuOptions)
 
     def create_html(self, oSystemNavBar):

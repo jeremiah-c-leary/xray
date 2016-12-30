@@ -91,7 +91,7 @@ class testAsciidocMethods(unittest.TestCase):
         oDevice.add_interface(oInterface)
         self.assertEqual(oDevice.lInterfaces[0].sName, 'Interface A')
 
-    def test_device_create_navbar(self):
+    def test_device_create_navbar_with_interface(self):
         oDevice = xray.device('xray-device_a.adoc', 'xray_system')
         oInterface = xray.interface('xray-interface_a.adoc', 'xray_system')
         oDevice.add_interface(oInterface)
@@ -100,6 +100,19 @@ class testAsciidocMethods(unittest.TestCase):
             for sLine in oFile:
                 lExpected.append(sLine.rstrip())
         self.assertEqual(oDevice.create_navbar().create(), lExpected)
+
+    def test_device_create_navbar_with_interface_and_component(self):
+        oDevice = xray.device('xray-device_a.adoc', 'xray_system')
+        oInterface = xray.interface('xray-interface_a.adoc', 'xray_system')
+        oComponent = xray.component('xray-component_a.adoc', 'xray_system')
+        oDevice.add_interface(oInterface)
+        oDevice.add_component(oComponent)
+        lExpected = []
+        with open('device-build_navbar_with_interface_and_component-expected.html') as oFile:
+            for sLine in oFile:
+                lExpected.append(sLine.rstrip())
+        self.assertEqual(oDevice.create_navbar().create(), lExpected)
+
 
     def test_device_with_component(self):
         oDevice = xray.device('xray-device_a.adoc', 'xray_system')
