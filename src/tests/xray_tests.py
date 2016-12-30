@@ -91,7 +91,7 @@ class testAsciidocMethods(unittest.TestCase):
         oDevice.add_interface(oInterface)
         self.assertEqual(oDevice.lInterfaces[0].sName, 'Interface A')
 
-    def test_device_build_navbar(self):
+    def test_device_create_navbar(self):
         oDevice = xray.device('xray-device_a.adoc', 'xray_system')
         oInterface = xray.interface('xray-interface_a.adoc', 'xray_system')
         oDevice.add_interface(oInterface)
@@ -99,21 +99,45 @@ class testAsciidocMethods(unittest.TestCase):
         with open('device-build_navbar-expected.html') as oFile:
             for sLine in oFile:
                 lExpected.append(sLine.rstrip())
-        print oDevice.sHtmlFilename
-        self.assertEqual(oDevice.build_navbar().create(), lExpected)
+        self.assertEqual(oDevice.create_navbar().create(), lExpected)
 
-#    def test_document_builds_one_device(self):
-#        if os.path.exists('xray_system-system.html'):
-#            os.remove('xray_system-system.html')
-#        oDocument = xray.document()
-#        oDocument.add_object(xray.system('xray-system.adoc'))
-#        oDocument.add_object(xray.device('xray-device_a.adoc'))
-#        oDocument.create_html()
-#        with open('xray_system-device_a.html') as oFile:
-#            lResults = oFile.readlines()
-#        with open('xray_system-device_a-expected.html') as oFile:
-#            lExpected = oFile.readlines()
-#        self.assertEqual(lResults, lExpected)
+    def test_device_with_component(self):
+        oDevice = xray.device('xray-device_a.adoc', 'xray_system')
+        oComponent = xray.component('xray-component_a.adoc', 'xray_system')
+        oDevice.add_component(oComponent)
+        self.assertEqual(oDevice.lComponents[0].sName, 'Component A')
+
+    def test_component_exists(self):
+        oComponent = xray.component('xray-component_a.adoc', 'xray_system')
+        self.assertEqual(oComponent.sFilename, 'xray-component_a.adoc')
+
+    def test_component_name(self):
+        oComponent = xray.component('xray-component_a.adoc', 'xray_system')
+        self.assertEqual(oComponent.sName, 'Component A')
+
+    def test_component_html_filename(self):
+        oComponent = xray.component('xray-component_a.adoc', 'xray_system')
+        self.assertEqual(oComponent.sHtmlFilename, 'xray_system-component_a.html')
+
+    def test_component_with_interfaces(self):
+        oComponent = xray.component('xray-component_a.adoc', 'xray_system')
+        oInterface = xray.interface('xray-interface_a.adoc', 'xray_system')
+        oComponent.add_interface(oInterface)
+        self.assertEqual(oComponent.lInterfaces[0].sName, 'Interface A')
+
+    def test_component_with_component(self):
+        oComponent = xray.component('xray-component_a.adoc', 'xray_system')
+        oComponent2 = xray.component('xray-component_b.adoc', 'xray_system')
+        oComponent.add_component(oComponent2)
+        self.assertEqual(oComponent.lComponents[0].sName, 'Component B')
+
+    def test_component_with_component_with_interface(self):
+        oComponent = xray.component('xray-component_a.adoc', 'xray_system')
+        oComponent2 = xray.component('xray-component_b.adoc', 'xray_system')
+        oInterface = xray.interface('xray-interface_a.adoc', 'xray_system')
+        oComponent2.add_interface(oInterface)
+        oComponent.add_component(oComponent2)
+        self.assertEqual(oComponent.lComponents[0].lInterfaces[0].sName, 'Interface A')
 
 if __name__ == '__main__':
     unittest.main()

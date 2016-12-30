@@ -229,8 +229,9 @@ class device():
         self.sFilename = sFilename
         self.lHtml = asciidoc.file(self.sFilename).build_html()
         self.sName = self.lHtml[0].linkText
-        self.lInterfaces = None
         self.sHtmlFilename = (sSystemName + "-" + self.sName + ".html").lower().replace(' ', '_')
+        self.lInterfaces = None
+        self.lComponents = None
 
     def build_html(self):
         return self.lHtml
@@ -239,6 +240,11 @@ class device():
         if not self.lInterfaces:
             self.lInterfaces = []
         self.lInterfaces.append(oInterface)
+
+    def add_component(self, oComponent):
+        if not self.lComponents:
+            self.lComponents = []
+        self.lComponents.append(oComponent)
 
     def create_navbar(self):
         lMenuOptions = None
@@ -270,3 +276,24 @@ class device():
         with open(sDeviceFileName, 'w') as oFile:
             for sTag in oHtmlFile.create():
                 oFile.write(sTag + '\n')
+
+
+class component():
+
+    def __init__(self, sFilename, sSystemName):
+        self.sFilename = sFilename
+        self.lHtml = asciidoc.file(self.sFilename).build_html()
+        self.sName = self.lHtml[0].linkText
+        self.sHtmlFilename = (sSystemName + "-" + self.sName + ".html").lower().replace(' ', '_')
+        self.lInterfaces = None
+        self.lComponents = None
+
+    def add_interface(self, oInterface):
+        if not self.lInterfaces:
+            self.lInterfaces = []
+        self.lInterfaces.append(oInterface)
+
+    def add_component(self, oComponent):
+        if not self.lComponents:
+            self.lComponents = []
+        self.lComponents.append(oComponent)
