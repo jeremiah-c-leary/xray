@@ -105,10 +105,11 @@ def menu_item(sHref, sName):
 
 class interface():
 
-    def __init__(self, sFilename):
+    def __init__(self, sFilename, sSystemName):
         self.sFilename = sFilename
         self.lHtml = asciidoc.file(self.sFilename).build_html()
         self.sName = self.lHtml[0].linkText
+        self.sHtmlFilename = (sSystemName + "-" + self.sName + ".html").lower().replace(' ', '_')
 
     def build_html(self):
         return self.lHtml
@@ -203,7 +204,7 @@ class document():
                         oFile.write(sTag + '\n')
 
             if isinstance(oObject, device):
-                oObject.create_html(sSystemName, oNavBar)
+                oObject.create_html(oNavBar)
 
             if isinstance(oObject, interface):
                 lHtmlObjects = oObject.build_html()
@@ -224,11 +225,12 @@ class document():
 
 class device():
 
-    def __init__(self, sFilename):
+    def __init__(self, sFilename, sSystemName):
         self.sFilename = sFilename
         self.lHtml = asciidoc.file(self.sFilename).build_html()
         self.sName = self.lHtml[0].linkText
         self.lInterfaces = None
+        self.sHtmlFilename = (sSystemName + "-" + self.sName + ".html").lower().replace(' ', '_')
 
     def build_html(self):
         return self.lHtml
@@ -238,19 +240,29 @@ class device():
             self.lInterfaces = []
         self.lInterfaces.append(oInterface)
 
-#    def build_navbar(self):
-#        if self.interfaces:
+    def create_navbar(self):
+        lMenuOptions = None
+        lDropDownMenuItems = []
+        oInterfaceMenu = None
+        if self.lInterfaces:
+            for oInterface in self.lInterfaces:
+                lDropDownMenuItems.append(menu_item(oInterface.sHtmlFilename, oInterface.sName))
+            oInterfaceMenu = build_drop_menu('Interfaces', lDropDownMenuItems)
+            if not lMenuOptions:
+                lMenuOptions = []
+            lMenuOptions.append(oInterfaceMenu)
+        return build_navbar(self.sHtmlFilename, self.sName, lMenuOptions)
 
-    def create_html(self, sSystemName, oSystemNavBar):
+    def create_html(self, oSystemNavBar):
         lHtmlObjects = self.build_html()
-        sDeviceFileName = sSystemName.lower().replace(' ', '_') + '-' + lHtmlObjects[0].create()[1].lower().replace(' ', '_') + '.html'
+        sDeviceFileName = self.sHtmlFilename
         sDeviceName = lHtmlObjects[0].create()[1]
 
         oHtmlFile = html.html()
         oHtmlFile.add_tag(build_head())
         oBody = html.body()
         oBody.add_tag(oSystemNavBar)
-        oBody.add_tag(build_navbar(sDeviceFileName, sDeviceName, None))
+        oBody.add_tag(self.create_navbar())
         for lHtmlObject in lHtmlObjects:
             oBody.add_tag(lHtmlObject)
         oHtmlFile.add_tag(oBody)

@@ -9,14 +9,14 @@ import os
 class testAsciidocMethods(unittest.TestCase):
 
     def test_interface_exists(self):
-        self.assertEqual(xray.interface('xray-interface_a.adoc').sFilename,'xray-interface_a.adoc')
+        self.assertEqual(xray.interface('xray-interface_a.adoc', 'xray_system').sFilename,'xray-interface_a.adoc')
 
     def test_interface_name(self):
-        oInterface = xray.interface('xray-interface_a.adoc')
+        oInterface = xray.interface('xray-interface_a.adoc', 'xray_system')
         self.assertEqual(oInterface.sName, 'Interface A')
 
     def test_interface_builds_html(self):
-        oInterface = xray.interface('xray-interface_a.adoc')
+        oInterface = xray.interface('xray-interface_a.adoc', 'xray_system')
         lResults = []
         for oHtml in oInterface.build_html():
             lResults.extend(oHtml.create())
@@ -69,10 +69,10 @@ class testAsciidocMethods(unittest.TestCase):
         self.assertEqual(lResults, lExpected)
 
     def test_device_exists(self):
-        self.assertEqual(xray.device('xray-device_a.adoc').sFilename,'xray-device_a.adoc')
+        self.assertEqual(xray.device('xray-device_a.adoc', 'xray_system').sFilename,'xray-device_a.adoc')
 
     def test_device_build_html(self):
-        oDevice = xray.device('xray-device_a.adoc')
+        oDevice = xray.device('xray-device_a.adoc', 'xray_system')
         lResults = []
         for oHtml in oDevice.build_html():
           lResults.extend(oHtml.create()) 
@@ -82,14 +82,25 @@ class testAsciidocMethods(unittest.TestCase):
         self.assertEqual(lResults[0:6],lExpected)
 
     def test_device_name(self):
-        oDevice = xray.device('xray-device_a.adoc')
+        oDevice = xray.device('xray-device_a.adoc', 'xray_system')
         self.assertEqual(oDevice.sName,'Device A')
 
     def test_device_adding_interface(self):
-        oDevice = xray.device('xray-device_a.adoc')
-        oInterface = xray.interface('xray-interface_a.adoc')
+        oDevice = xray.device('xray-device_a.adoc', 'xray_system')
+        oInterface = xray.interface('xray-interface_a.adoc', 'xray_system')
         oDevice.add_interface(oInterface)
         self.assertEqual(oDevice.lInterfaces[0].sName, 'Interface A')
+
+    def test_device_build_navbar(self):
+        oDevice = xray.device('xray-device_a.adoc', 'xray_system')
+        oInterface = xray.interface('xray-interface_a.adoc', 'xray_system')
+        oDevice.add_interface(oInterface)
+        lExpected = []
+        with open('device-build_navbar-expected.html') as oFile:
+            for sLine in oFile:
+                lExpected.append(sLine.rstrip())
+        print oDevice.sHtmlFilename
+        self.assertEqual(oDevice.build_navbar().create(), lExpected)
 
 #    def test_document_builds_one_device(self):
 #        if os.path.exists('xray_system-system.html'):
