@@ -11,6 +11,10 @@ class testAsciidocMethods(unittest.TestCase):
     def test_interface_exists(self):
         self.assertEqual(xray.interface('xray-interface_a.adoc').sFilename,'xray-interface_a.adoc')
 
+    def test_interface_name(self):
+        oInterface = xray.interface('xray-interface_a.adoc')
+        self.assertEqual(oInterface.sName, 'Interface A')
+
     def test_interface_builds_html(self):
         oInterface = xray.interface('xray-interface_a.adoc')
         lResults = []
@@ -51,7 +55,6 @@ class testAsciidocMethods(unittest.TestCase):
         oDocument.add_object(xray.system('xray-system.adoc'))
         oDocument.create_html()
         self.assertTrue(os.path.exists('xray_system-system.html'))
-        
 
     def test_document_builds_system(self):
         if os.path.exists('xray_system-system.html'):
@@ -65,7 +68,6 @@ class testAsciidocMethods(unittest.TestCase):
             lExpected = oFile.readlines()
         self.assertEqual(lResults, lExpected)
 
-
     def test_device_exists(self):
         self.assertEqual(xray.device('xray-device_a.adoc').sFilename,'xray-device_a.adoc')
 
@@ -78,6 +80,16 @@ class testAsciidocMethods(unittest.TestCase):
         lExpected.extend(['<h1>','Device A','</h1>'])
         lExpected.extend(['<p>','Tri-tip burgdoggen ground round turducken, ham venison drumstick t-bone kevin shank filet mignon short ribs brisket flank. Landjaeger tri-tip ribeye, drumstick andouille salami tenderloin beef swine pastrami porchetta chicken. Pork loin t-bone prosciutto landjaeger, shank ball tip pastrami pork. Tail drumstick shank, sausage flank brisket short ribs rump tenderloin. Short loin boudin sausage swine kevin. Short loin drumstick venison brisket turkey chuck ham pork chop beef ribs.','</p>'])
         self.assertEqual(lResults[0:6],lExpected)
+
+    def test_device_name(self):
+        oDevice = xray.device('xray-device_a.adoc')
+        self.assertEqual(oDevice.sName,'Device A')
+
+    def test_device_adding_interface(self):
+        oDevice = xray.device('xray-device_a.adoc')
+        oInterface = xray.interface('xray-interface_a.adoc')
+        oDevice.add_interface(oInterface)
+        self.assertEqual(oDevice.lInterfaces[0].sName, 'Interface A')
 
 #    def test_document_builds_one_device(self):
 #        if os.path.exists('xray_system-system.html'):
