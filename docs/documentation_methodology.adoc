@@ -1,0 +1,77 @@
+Documentation Methodology
+=========================
+
+* Increasing detail from top to bottom
+* Increasing detail from left to right
+* Documentation should by located close to source files
+* Documentation should be distributed
+
+How do you collect and present all the information about a VHDL design in one place.
+How do you make it easy for engineers and non-engineers to find the information they are looking for.
+
+Define the information in an HDL design
+---------------------------------------
+
+Documentation Elements
+~~~~~~~~~~~~~~~~~~~~~~
+
+|==================
+| Element     | Purpose
+| system      | The system the device(s) live in
+| device      | The device(s) that make up the design
+| component   | Sub parts of the devices
+| register    | Accessible portions of the design via a processor
+| memory map  | A collection of registers and the address to access them
+| interface   | A defined collection of signals with a common purpose
+| protocol    | How the collection of signals in an interface behave to produce a desired outcome
+|==================
+
+Document Element relationships
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+|========================================
+|            | system | device | component | register | memory map | interface | protocol 
+| system     |   -    |   X    |     X     |    -     |     X      |     X     |    -  
+| device     |   -    |   -    |     X     |    -     |     X      |     X     |    -  
+| component  |   -    |   -    |     X     |    -     |     X      |     X     |    -  
+| register   |   -    |   -    |     -     |    -     |     -      |     -     |    -  
+| memory map |   -    |   -    |     -     |    X     |     -      |     -     |    -  
+| interface  |   -    |   -    |     -     |    -     |     -      |     -     |    X  
+| protocol   |   -    |   -    |     -     |    -     |     -      |     -     |    -  
+|========================================
+
+Document Heirarchy
+~~~~~~~~~~~~~~~~~~
+
+* system
+** device
+*** component
+**** memory map
+***** register
+**** interface
+***** protocol
+*** memory map
+**** register
+*** interface
+**** protocol
+** component
+*** memory map
+**** register
+*** interface
+**** protocol
+** memory map
+*** register
+** interface
+*** protocol
+
+Define goals of organizing information
+--------------------------------------
+
+* Easy to find information
+* Related information should be together
+* Provide as much information on screen at one time
+* Present based on level of detail
+
+
+
+
