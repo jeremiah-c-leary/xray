@@ -178,11 +178,43 @@ class testAsciidocMethods(unittest.TestCase):
             lResults.extend(oHtml.create())
         self.assertEqual(lResults,lExpected)
 
-    def test_asciidoc_register_file(self):
+    def test_asciidoc_memory_map(self):
         oFile = asciidoc.file('register-example.adoc')
         self.assertEqual(oFile.oMemoryMap.sName, 'Block A Memory Map')
         self.assertEqual(oFile.objects[1].sName, 'Block A Memory Map')
     
+    def test_asciidoc_register(self):
+        oFile = asciidoc.file('register-example.adoc')
+        self.assertEqual(oFile.oMemoryMap.lObjects[0].sName, 'Register 1a')
+        self.assertEqual(oFile.oMemoryMap.lObjects[1].sName, 'Register 2')
+        self.assertEqual(oFile.oMemoryMap.lObjects[2].sName, 'Register 3')
+        self.assertEqual(oFile.objects[2].sName, 'Register 1')
+        self.assertEqual(oFile.objects[3].sName, 'Register 2')
+        self.assertEqual(oFile.objects[4].sName, 'Register 3')
+
+    def test_file_extract_memory_map(self):
+        lInput = []
+        lInput.append('memory_map:memory_map_block_a[name="Block A Memory Map"]')
+        lInput.append('')
+        lInput.append('|==========')
+        lInput.append('|  Address  |  Name        | Register   ')
+        lInput.append('|     0x0   |  Register 1a | Register_1 ')
+        lInput.append('|     0x0   |  Register 2  | Register_2 ')
+        lInput.append('|     0x0   |  Register 3  | Register_3 ')
+        lInput.append('|     0x0   |  Register 1b | Register_1 ')
+        lInput.append('|==========')
+        oMemoryMap = asciidoc.extract_memory_map(lInput)
+        self.assertEqual(oMemoryMap.sName,'Block A Memory Map')
+        self.assertEqual(oMemoryMap.lObjects[0].oObject.sUniqueId,'Register_1')
+        self.assertEqual(oMemoryMap.lObjects[0].sName,'Register 1a')
+        self.assertEqual(oMemoryMap.lObjects[1].oObject.sUniqueId,'Register_2')
+        self.assertEqual(oMemoryMap.lObjects[1].sName,'Register 2')
+        self.assertEqual(oMemoryMap.lObjects[2].oObject.sUniqueId,'Register_3')
+        self.assertEqual(oMemoryMap.lObjects[2].sName,'Register 3')
+        self.assertEqual(oMemoryMap.lObjects[3].oObject.sUniqueId,'Register_1')
+        self.assertEqual(oMemoryMap.lObjects[3].sName,'Register 1b')
+
+
 
 if __name__ == '__main__':
     unittest.main()
