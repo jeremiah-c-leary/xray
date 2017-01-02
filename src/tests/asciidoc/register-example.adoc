@@ -1,0 +1,41 @@
+Registers
+=========
+
+memory_map:memory_map_block_a[name="Block A Memory Map"]
+
+|========================================
+|  Address  |  Name        | Register
+|     0x0   |  Register 1a | Register_1
+|     0x1   |  Register 2  | Register_2
+|     0x2   |  Register 3  | Register_3
+|     0x3   |  Register 1b | Register_1
+|========================================
+
+
+register:Register_1[name="Register 1", width=32]
+
+This register lorem ipsum ...
+
+|=============================================
+|  Bits  | Type  | Default | Description
+|    0   |  RW   |   0x0   | Lorem ipsum ...
+|  7:4   |  RO   |   0xF   | Lorem ipsum ...
+|=============================================
+
+register:Register_2[name="Register 2", width=32]
+
+This register lorem ipsum ...
+
+|=============================================
+|  Bits  | Type  | Default     | Description
+|  31:0  |  RW   |  0x12345678 | Lorem ipsum ...
+|=============================================
+
+register:Register_3[name="Register 3", width=32]
+
+|=============================================
+|  Bits  | Type  | Default | Description
+|  15:0  |  RW   |  0x0000 | Lorem ipsum ...
+|  31:16 |  R0   |  0xFEAB | Lorem ipsum ...
+|=============================================
+
