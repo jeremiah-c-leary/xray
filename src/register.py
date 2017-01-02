@@ -2,8 +2,9 @@
 
 class base():
 
-    def __init__(self):
+    def __init__(self, sUniqueId=None):
         self.lDescription = None
+        self.sUniqueId = sUniqueId
 
     def add_description(self, sDescription):
         if not self.lDescription:
@@ -30,8 +31,8 @@ class field(base):
 
 class register(base):
 
-    def __init__(self, sName, iWidth):
-        base.__init__(self)
+    def __init__(self, sName, iWidth, sUniqueId):
+        base.__init__(self, sUniqueId)
         self.sName = sName
         self.iWidth = iWidth
         self.lFields = None
