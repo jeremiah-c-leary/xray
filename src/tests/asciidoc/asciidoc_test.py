@@ -1,5 +1,5 @@
 import sys
-sys.path.append('..')
+sys.path.append('../..')
 import unittest
 import asciidoc
 
@@ -22,7 +22,6 @@ class testAsciidocMethods(unittest.TestCase):
 
     def test_asciidoc_file_with_headers(self):
         oFile = asciidoc.file('asciidoc-headers.adoc')
-#        oFile.process('asciidoc-headers.adoc')
         self.assertEqual(oFile.objects[0].sTitle,'One Interface')
         self.assertEqual(oFile.objects[0].iLevel,1)
         self.assertEqual(oFile.objects[1].sTitle,'First Protocol')
@@ -179,6 +178,11 @@ class testAsciidocMethods(unittest.TestCase):
             lResults.extend(oHtml.create())
         self.assertEqual(lResults,lExpected)
 
+    def test_asciidoc_register_file(self):
+        oFile = asciidoc.file('register-example.adoc')
+        self.assertEqual(oFile.oMemoryMap.sName, 'Block A Memory Map')
+        self.assertEqual(oFile.objects[1].sName, 'Block A Memory Map')
+    
 
 if __name__ == '__main__':
     unittest.main()
